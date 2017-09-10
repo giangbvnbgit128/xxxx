@@ -86,6 +86,7 @@
 		4B9127E51F614910004DF093 /* SPRecipentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9127E31F614910004DF093 /* SPRecipentTableViewCell.swift */; };
 		4B9127E61F614910004DF093 /* SPRecipentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B9127E41F614910004DF093 /* SPRecipentTableViewCell.xib */; };
 		534DA0371F62FF710033E5FE /* SPBaseParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534DA0361F62FF710033E5FE /* SPBaseParentViewController.swift */; };
+		53AE2E671F65C6500079168D /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53AE2E661F65C6500079168D /* Photos.framework */; };
 		DD010F43BAF6D1CB7D9F55E1 /* Pods_xxxx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2A0EA5D03E5F588F7817BB /* Pods_xxxx.framework */; };
 /* End PBXBuildFile section */
 
@@ -192,6 +193,7 @@
 		4B9127E31F614910004DF093 /* SPRecipentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPRecipentTableViewCell.swift; sourceTree = "<group>"; };
 		4B9127E41F614910004DF093 /* SPRecipentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPRecipentTableViewCell.xib; sourceTree = "<group>"; };
 		534DA0361F62FF710033E5FE /* SPBaseParentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPBaseParentViewController.swift; sourceTree = "<group>"; };
+		53AE2E661F65C6500079168D /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		A652FA5C4DCC872C174DC87A /* Pods-xxxx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xxxx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-xxxx/Pods-xxxx.debug.xcconfig"; sourceTree = "<group>"; };
 		CD2A0EA5D03E5F588F7817BB /* Pods_xxxx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_xxxx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE75EEDB1E1A67AA8DAF4EAF /* Pods-xxxx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xxxx.release.xcconfig"; path = "Pods/Target Support Files/Pods-xxxx/Pods-xxxx.release.xcconfig"; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53AE2E671F65C6500079168D /* Photos.framework in Frameworks */,
 				4B37F7FB1F60F62A006F5EC3 /* AKSideMenu.framework in Frameworks */,
 				4B37F7FC1F60F62A006F5EC3 /* Alamofire.framework in Frameworks */,
 				4B37F7FD1F60F62A006F5EC3 /* ObjectMapper.framework in Frameworks */,
@@ -567,6 +570,7 @@
 		6E9B110D0F8FEE14B3CC9FB0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				53AE2E661F65C6500079168D /* Photos.framework */,
 				4B37F7F81F60F62A006F5EC3 /* AKSideMenu.framework */,
 				4B37F7F91F60F62A006F5EC3 /* Alamofire.framework */,
 				4B37F7FA1F60F62A006F5EC3 /* ObjectMapper.framework */,

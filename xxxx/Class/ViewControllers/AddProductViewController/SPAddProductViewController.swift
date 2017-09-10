@@ -8,8 +8,9 @@
 
 import UIKit
 import RealmSwift
+import Photos
 
-class SPAddProductViewController: SPBaseParentViewController {
+class SPAddProductViewController: SPBaseParentViewController, UIImagePickerControllerDelegate ,UINavigationControllerDelegate {
     
     @IBOutlet weak var txtfNameProduct: UITextField!
     @IBOutlet weak var txtfProducer: UITextField!
@@ -18,12 +19,15 @@ class SPAddProductViewController: SPBaseParentViewController {
     @IBOutlet weak var txtfPrice: UITextField!
     @IBOutlet weak var imgAvartaForProduct: UIImageView!
 
+    let imagePiker = UIImagePickerController()
     
+    var imageInfor:[String : Any] = [:]
+    var imagesList = [PHAsset]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        imagePiker.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,7 +44,6 @@ class SPAddProductViewController: SPBaseParentViewController {
         let totalProduct:String = self.txtfTotal.text ?? ""
         let originPrice:String = self.txtfOriginPrice.text ?? ""
         let price:String = self.txtfPrice.text ?? ""
-        let imageUrl:String = ""
         
         if nameProudct == "" {
             self.showAler(message: "Product name not null", title: "Error")
@@ -66,13 +69,13 @@ class SPAddProductViewController: SPBaseParentViewController {
          var producer:String = ""
 
          */
-        var product = SPProduct()
+        let product = SPProduct()
             product.name = nameProudct
             product.totalProduct = 100
-            product.imageUrl = ""
+            product.imageUrl = ""//imageInfor
             product.producer = producer
             product.originPrice = 100
-            product.price = 100
+            product.price = Int(price) ?? 0
             product.totalProduct = 100
             product.inventory = 0
             product.startDate = "12345"
@@ -84,10 +87,45 @@ class SPAddProductViewController: SPBaseParentViewController {
         self.showAler(message: "Add Product \(product.name) success !", title: "Done")
     }
     @IBAction func clickSelectImage(_ sender: Any) {
-    
+    // laod image from ablum
+        imagePiker.allowsEditing = false
+        imagePiker.sourceType = .photoLibrary
+        
+        present(imagePiker, animated: true, completion: nil)
     }
     @IBAction func clickUini(_ sender: Any) {
         
     }
 
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        // save a PHAsset reference in imagesList array for later use
+        if let imageUrl = info[UIImagePickerControllerReferenceURL] as? URL{
+            
+            let assets = PHAsset.fetchAssets(withALAssetURLs: [imageUrl], options: nil)
+            
+            if let p = assets.firstObject {
+                
+//                imagesList.append(p)
+                self.imgAvartaForProduct.image = getAssetThumbnail(asset: p)
+                
+            }
+            
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    func getAssetThumbnail(asset: PHAsset) -> UIImage {
+        let manager = PHImageManager.default()
+        let option = PHImageRequestOptions()
+        var thumbnail = UIImage()
+        option.isSynchronous = true
+        manager.requestImage(for: asset, targetSize: CGSize(width: 100, height: 100), contentMode: .aspectFit, options: option, resultHandler: {(result, info)->Void in
+            thumbnail = result!
+        })
+        return thumbnail
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
 }
+

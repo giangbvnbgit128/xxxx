@@ -36,7 +36,7 @@ class SPProductTableViewCell: UITableViewCell {
         lblTotal.text = "\(product.totalProduct)"
         lblInventory.text = "\(product.inventory)"
         lblPrice.text = "\(product.price)"
-        imageView?.image = UIImage(named: product.imageUrl)
+//        imageView?.image = UIImage(named: product.imageUrl)
     }
     
 }

@@ -236,6 +236,21 @@ public extension UIImage {
         return resizedImage!
     }
     
+    func resizeForMultiScreen(size: CGSize) -> UIImage {
+        
+        let widthRatio = size.width * Ratio.widthIPhone6 / self.size.width
+        let heightRatio = size.height * Ratio.widthIPhone6 / self.size.height
+        let ratio = (widthRatio < heightRatio) ? widthRatio : heightRatio
+        let resizedSize = CGSize(width: (self.size.width * ratio), height: (self.size.height * ratio))
+        UIGraphicsBeginImageContext(resizedSize)
+        draw(in: CGRect(x: 0, y: 0, width: resizedSize.width, height: resizedSize.height))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        //print("width::\(size.width)  self.size.width::\(self.size.width)   height::\(size.height)  self.size.height::\(self.size.height)  resizedSize.width::\(resizedSize.width)  resizedSize.height::\(resizedSize.height)")
+        return resizedImage!
+    }
+    
     func resizeH(height: CGFloat) -> UIImage {
         let heightRatio = height / self.size.height
         let resizedSize = CGSize(width: (self.size.width * heightRatio), height:height)
