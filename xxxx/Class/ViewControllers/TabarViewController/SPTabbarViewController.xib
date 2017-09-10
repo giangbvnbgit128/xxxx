@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SPTabbarViewController" customModule="xxxx" customModuleProvider="target">
+            <connections>
+                <outlet property="billItemTabbar" destination="YCB-FL-YLP" id="zDz-r5-bZe"/>
+                <outlet property="frequenterItemTabbar" destination="0lh-i2-ENo" id="Wu9-zt-puz"/>
+                <outlet property="orderItemTabbar" destination="LeH-4Y-iEL" id="VJZ-9A-D9T"/>
+                <outlet property="productItemTabbar" destination="JP4-wE-lOD" id="HNE-MK-lJd"/>
+                <outlet property="tabbarView" destination="Hfb-Vn-X0x" id="cle-IU-rFP"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hfb-Vn-X0x">
+                    <rect key="frame" x="0.0" y="618" width="375" height="49"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <items>
+                        <tabBarItem title="Order" id="LeH-4Y-iEL"/>
+                        <tabBarItem tag="1" title="Bill" id="YCB-FL-YLP"/>
+                        <tabBarItem tag="2" title="Product" id="JP4-wE-lOD" userLabel="product"/>
+                        <tabBarItem tag="3" title="Frequenter" id="0lh-i2-ENo"/>
+                    </items>
+                </tabBar>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Hfb-Vn-X0x" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="kKg-m7-wth"/>
+                <constraint firstAttribute="bottom" secondItem="Hfb-Vn-X0x" secondAttribute="bottom" id="lIl-Ib-CNa"/>
+                <constraint firstAttribute="trailing" secondItem="Hfb-Vn-X0x" secondAttribute="trailing" id="xoJ-gR-g7C"/>
+            </constraints>
+        </view>
+    </objects>
+</document>
