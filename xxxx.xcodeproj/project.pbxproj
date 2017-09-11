@@ -262,6 +262,7 @@
 			children = (
 				4B33C9091F62918400A340EA /* SPAddProductViewController.swift */,
 				4B33C90A1F62918400A340EA /* SPAddProductViewController.xib */,
+				4B37F8321F60FF87006F5EC3 /* ManagerShipViewController */,
 			);
 			path = AddProductViewController;
 			sourceTree = "<group>";
@@ -295,7 +296,8 @@
 				4B37F8371F60FF87006F5EC3 /* FrequenterViewController */,
 				4B37F83D1F60FF87006F5EC3 /* OrderViewController */,
 			);
-			path = ManagerShipViewController;
+			name = ManagerShipViewController;
+			path = ../ManagerShipViewController;
 			sourceTree = "<group>";
 		};
 		4B37F8331F60FF87006F5EC3 /* BillViewController */ = {
@@ -522,7 +524,6 @@
 				4B33C9071F62905A00A340EA /* AddProductViewController */,
 				4B33C8FD1F627E4400A340EA /* ManagerProductViewController */,
 				4B33C8F21F62416600A340EA /* MapsViewController */,
-				4B37F8321F60FF87006F5EC3 /* ManagerShipViewController */,
 				4B37F84D1F60FFD2006F5EC3 /* LeftMenuViewController */,
 				4B3FB1BC1F60E90A00B335FB /* TabarViewController */,
 			);
@@ -762,6 +763,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-xxxx/Pods-xxxx-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AKSideMenu/AKSideMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/DateTimePicker/DateTimePicker.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
@@ -770,6 +772,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AKSideMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DateTimePicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",

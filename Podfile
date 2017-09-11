@@ -1,4 +1,4 @@
-platform :ios, ‘8.0’
+platform :ios, ‘9.0’
 use_frameworks!
 
 target 'xxxx' do
@@ -8,6 +8,7 @@ target 'xxxx' do
   pod 'GoogleMaps'
   pod 'GooglePlaces'
   pod 'RealmSwift'
+  pod 'DateTimePicker'
 end
 #post_install do |installer|
 #    installer.pods_project.targets.each do |target|

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SPProductTableViewCell: UITableViewCell {
+class SPProductTableViewCell: SPBaseTableViewCell {
 
     @IBOutlet weak var nameProduct: UILabel!
     
@@ -36,7 +36,10 @@ class SPProductTableViewCell: UITableViewCell {
         lblTotal.text = "\(product.totalProduct)"
         lblInventory.text = "\(product.inventory)"
         lblPrice.text = "\(product.price)"
-//        imageView?.image = UIImage(named: product.imageUrl)
+        if let urlImage = URL(string: product.imageUrl) {
+            imgAvartaProduct.image = self.displayImageFromAsset(imageUrl: urlImage)
+        }
+
     }
     
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 class SPBaseTableViewCell: UITableViewCell {
 
@@ -21,4 +22,22 @@ class SPBaseTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func displayImageFromAsset(imageUrl: URL) -> UIImage {
+        var imageRS = UIImage()
+            let assets = PHAsset.fetchAssets(withALAssetURLs: [imageUrl], options: nil)
+            if let p = assets.firstObject {
+              imageRS = getAssetThumbnail(asset: p)
+        }
+        return imageRS
+    }
+    func getAssetThumbnail(asset: PHAsset) -> UIImage {
+        let manager = PHImageManager.default()
+        let option = PHImageRequestOptions()
+        var thumbnail = UIImage()
+        option.isSynchronous = true
+        manager.requestImage(for: asset, targetSize: CGSize(width: 100, height: 100), contentMode: .aspectFit, options: option, resultHandler: {(result, info)->Void in
+            thumbnail = result!
+        })
+        return thumbnail
+    }
 }

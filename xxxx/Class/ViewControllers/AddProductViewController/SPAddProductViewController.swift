@@ -18,16 +18,22 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
     @IBOutlet weak var txtfOriginPrice: UITextField!
     @IBOutlet weak var txtfPrice: UITextField!
     @IBOutlet weak var imgAvartaForProduct: UIImageView!
+    @IBOutlet weak var parentPickerView: UIView!
+    @IBOutlet weak var childPickerView: UIView!
+    @IBOutlet weak var viewClosePickDateTime: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
 
     let imagePiker = UIImagePickerController()
-    
-    var imageInfor:[String : Any] = [:]
-    var imagesList = [PHAsset]()
+    var imageUrlForAvarta:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         imagePiker.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,7 +42,7 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
     }
     
     @IBAction func clickCancel(_ sender: Any) {
-        
+        //??
     }
     @IBAction func clickOk(_ sender: Any) {
         let nameProudct:String = self.txtfNameProduct.text ?? ""
@@ -55,28 +61,13 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
             self.showAler(message: "Origin price not null", title: "Error")
             return
         }
-        // func save data
-        /*
-         var id:Int = -1
-         var inventory:Int = 0
-         var totalProduct:Int = 0
-         var name:String = ""
-         var imageUrl:String = ""
-         var price:Int = 0
-         var originPrice:Int = 0
-         var startDate:String = ""
-         var endDate:String = ""
-         var producer:String = ""
-
-         */
         let product = SPProduct()
             product.name = nameProudct
-            product.totalProduct = 100
-            product.imageUrl = ""//imageInfor
+            product.totalProduct = Int(totalProduct) ?? 0
+            product.imageUrl = self.imageUrlForAvarta
             product.producer = producer
-            product.originPrice = 100
+            product.originPrice = Int(originPrice) ?? 0
             product.price = Int(price) ?? 0
-            product.totalProduct = 100
             product.inventory = 0
             product.startDate = "12345"
         let realm = try! Realm()
@@ -90,7 +81,6 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
     // laod image from ablum
         imagePiker.allowsEditing = false
         imagePiker.sourceType = .photoLibrary
-        
         present(imagePiker, animated: true, completion: nil)
     }
     @IBAction func clickUini(_ sender: Any) {
@@ -100,14 +90,10 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         // save a PHAsset reference in imagesList array for later use
         if let imageUrl = info[UIImagePickerControllerReferenceURL] as? URL{
-            
             let assets = PHAsset.fetchAssets(withALAssetURLs: [imageUrl], options: nil)
-            
             if let p = assets.firstObject {
-                
-//                imagesList.append(p)
+                self.imageUrlForAvarta = String(describing: imageUrl)
                 self.imgAvartaForProduct.image = getAssetThumbnail(asset: p)
-                
             }
             
         }
@@ -127,5 +113,9 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func clickDateTimePicker(_ sender: Any) {
+        
+    }
+
 }
 
