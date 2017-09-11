@@ -18,12 +18,13 @@ class SPProductTableViewCell: SPBaseTableViewCell {
     @IBOutlet weak var lblPrice: UILabel!
     @IBOutlet weak var imgAvartaProduct: UIImageView!
     
-    
+    let date = Date()
+    var formatDate = DateFormatter()
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        formatDate.dateFormat = DATA.DATEFORMAT
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -36,6 +37,7 @@ class SPProductTableViewCell: SPBaseTableViewCell {
         lblTotal.text = "\(product.totalProduct)"
         lblInventory.text = "\(product.inventory)"
         lblPrice.text = "\(product.price)"
+        lblStartDate.text = self.formatDate.string(from: product.startDate)
         if let urlImage = URL(string: product.imageUrl) {
             imgAvartaProduct.image = self.displayImageFromAsset(imageUrl: urlImage)
         }

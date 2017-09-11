@@ -9,4 +9,5 @@
 import Foundation
 class DATA {
     static let APIKEYMAPS:String = "AIzaSyBDzI1rRpJW6x6Rk3rJT42u2-3apvTkbqE"
+    static let DATEFORMAT:String = "YYYY-MM-dd HH:mm"
 }

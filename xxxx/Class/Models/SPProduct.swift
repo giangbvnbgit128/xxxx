@@ -17,9 +17,10 @@ class SPCategoryProduct: Object {
    dynamic var imageUrl:String = ""
    dynamic var price:Int = 0
    dynamic var originPrice:Int = 0
-   dynamic var startDate:String = ""
-   dynamic var endDate:String = ""
+   dynamic var startDate:Date = Date()
+   dynamic var endDate:Date = Date()
    dynamic var producer:String = ""
+   dynamic var unit:String = ""
    
 }
 

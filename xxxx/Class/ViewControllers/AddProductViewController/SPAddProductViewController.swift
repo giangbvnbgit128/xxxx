@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import Photos
+import DateTimePicker
 
 class SPAddProductViewController: SPBaseParentViewController, UIImagePickerControllerDelegate ,UINavigationControllerDelegate {
     
@@ -22,10 +23,14 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
     @IBOutlet weak var childPickerView: UIView!
     @IBOutlet weak var viewClosePickDateTime: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var btnDateTime: UIButton!
+    @IBOutlet weak var txtfUnit: UITextField!
 
     let imagePiker = UIImagePickerController()
     var imageUrlForAvarta:String = ""
-    
+    var result:String = ""
+    var date:Date = Date()
+    var formatter:DateFormatter = DateFormatter()
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePiker.delegate = self
@@ -33,7 +38,11 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = DATA.DATEFORMAT
+        result = formatter.string(from: date)
+        self.btnDateTime.setTitle(result, for: .normal)
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,7 +51,15 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
     }
     
     @IBAction func clickCancel(_ sender: Any) {
-        //??
+        self.txtfNameProduct.text = ""
+        self.txtfProducer.text = ""
+        self.txtfTotal.text = ""
+        self.txtfOriginPrice.text = ""
+        self.txtfPrice.text = ""
+        self.date = Date()
+        self.result = formatter.string(from: date)
+        self.btnDateTime.setTitle(self.result, for: .normal)
+        self.txtfUnit.text = ""
     }
     @IBAction func clickOk(_ sender: Any) {
         let nameProudct:String = self.txtfNameProduct.text ?? ""
@@ -50,6 +67,7 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
         let totalProduct:String = self.txtfTotal.text ?? ""
         let originPrice:String = self.txtfOriginPrice.text ?? ""
         let price:String = self.txtfPrice.text ?? ""
+        let unit:String = self.txtfUnit.text ?? ""
         
         if nameProudct == "" {
             self.showAler(message: "Product name not null", title: "Error")
@@ -69,7 +87,8 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
             product.originPrice = Int(originPrice) ?? 0
             product.price = Int(price) ?? 0
             product.inventory = 0
-            product.startDate = "12345"
+            product.startDate = self.date
+            product.unit = unit
         let realm = try! Realm()
         
         try! realm.write {
@@ -114,7 +133,22 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
     }
     
     @IBAction func clickDateTimePicker(_ sender: Any) {
-        
+
+        let picker = DateTimePicker.show(selected: date, minimumDate: nil, maximumDate: nil)
+        picker.highlightColor = UIColor(red: 255.0/255.0, green: 138.0/255.0, blue: 138.0/255.0, alpha: 1)
+        picker.isDatePickerOnly = false // to hide time and show only date picker
+        picker.selectedDate = date
+        picker.dateFormat = DATA.DATEFORMAT
+        picker.completionHandler = { date in
+            self.date = date
+            DispatchQueue.main.async {
+                self.formatter.dateFormat = DATA.DATEFORMAT
+                self.result = self.formatter.string(from: date)
+                self.btnDateTime.setTitle(self.result, for: .normal)
+                self.btnDateTime.titleLabel?.textColor = .red
+            }
+
+        }
     }
 
 }
