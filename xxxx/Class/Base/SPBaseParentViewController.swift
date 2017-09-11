@@ -16,7 +16,10 @@ class SPBaseParentViewController: UIViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         
         // add an action (button)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+//        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        alert.addAction(UIAlertAction( title: "Ok", style: .default, handler: { (complete) in
+            print("Action Ok")
+        }))
         
         // show the alert
         self.present(alert, animated: true, completion: nil)

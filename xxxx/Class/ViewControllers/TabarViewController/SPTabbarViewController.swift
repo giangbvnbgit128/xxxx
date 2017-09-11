@@ -47,7 +47,7 @@ class SPTabbarViewController: UIViewController {
         self.setUpTabBar()
         self.setRightBarIconParent()
         self.setLeftBarIconParent()
-        self.navigationController?.isNavigationBarHidden = false
+
         
         Static.instance = self
     }
@@ -55,6 +55,9 @@ class SPTabbarViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = false
+//        self.navigationController?.navigationItem.title = "Create Product"
+        self.navigationItem.title = "aaaa"
         SPManagerProductViewController.ShareInstance.loadData()
         
     }

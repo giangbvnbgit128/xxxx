@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -39,26 +39,8 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gVY-93-gJa" userLabel="ViewContent">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I55-Qw-jNg" userLabel="ViewHeader">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="86"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Product" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fQ6-tl-Lyp">
-                                                    <rect key="frame" x="99" y="33" width="122" height="21"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstItem="fQ6-tl-Lyp" firstAttribute="centerX" secondItem="I55-Qw-jNg" secondAttribute="centerX" id="Ogj-hG-1dq"/>
-                                                <constraint firstItem="fQ6-tl-Lyp" firstAttribute="centerY" secondItem="I55-Qw-jNg" secondAttribute="centerY" id="lw1-Bg-x7A"/>
-                                                <constraint firstAttribute="height" constant="86" id="yPK-Lw-dHA"/>
-                                            </constraints>
-                                        </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AXS-EK-UiN" userLabel="ViewFrom">
-                                            <rect key="frame" x="0.0" y="86" width="320" height="442"/>
+                                            <rect key="frame" x="0.0" y="20" width="320" height="442"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xzr-BK-W91" userLabel="ViewName">
                                                     <rect key="frame" x="8" y="0.0" width="304" height="30"/>
@@ -478,14 +460,11 @@
                                             </constraints>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstItem="I55-Qw-jNg" firstAttribute="top" secondItem="gVY-93-gJa" secondAttribute="top" id="95w-pb-xuy"/>
-                                        <constraint firstItem="I55-Qw-jNg" firstAttribute="leading" secondItem="gVY-93-gJa" secondAttribute="leading" id="CjA-ul-rPT"/>
-                                        <constraint firstAttribute="trailing" secondItem="I55-Qw-jNg" secondAttribute="trailing" id="W0Q-7P-BHI"/>
+                                        <constraint firstItem="AXS-EK-UiN" firstAttribute="top" secondItem="gVY-93-gJa" secondAttribute="top" constant="20" id="9UR-F2-763"/>
                                         <constraint firstAttribute="trailing" secondItem="AXS-EK-UiN" secondAttribute="trailing" id="m8k-YV-V5m"/>
                                         <constraint firstItem="AXS-EK-UiN" firstAttribute="leading" secondItem="gVY-93-gJa" secondAttribute="leading" id="uxv-hd-Fdt"/>
-                                        <constraint firstItem="AXS-EK-UiN" firstAttribute="top" secondItem="I55-Qw-jNg" secondAttribute="bottom" id="yEZ-Od-BcK"/>
                                     </constraints>
                                 </view>
                             </subviews>

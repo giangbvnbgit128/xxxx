@@ -34,6 +34,9 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePiker.delegate = self
+        SPTabbarViewController.ShareInstance.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationItem.title = "Create Product"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -94,7 +97,8 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
         try! realm.write {
             realm.add(product)
         }
-        self.showAler(message: "Add Product \(product.name) success !", title: "Done")
+        self.showAlerSuccess(message: "Add Product \(product.name) success !", title: "Done")
+        
     }
     @IBAction func clickSelectImage(_ sender: Any) {
     // laod image from ablum
@@ -103,8 +107,21 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
         present(imagePiker, animated: true, completion: nil)
     }
     @IBAction func clickUini(_ sender: Any) {
+       
+    }
+    
+    func showAlerSuccess(message:String,title:String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction( title: "Ok", style: .default, handler: { (complete) in
+             self.navigationController?.popViewController(animated: true)
+           
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
         
     }
+
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         // save a PHAsset reference in imagesList array for later use
