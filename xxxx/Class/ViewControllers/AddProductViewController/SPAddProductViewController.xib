@@ -14,6 +14,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SPAddProductViewController" customModule="xxxx" customModuleProvider="target">
             <connections>
                 <outlet property="btnDateTime" destination="c9f-0y-XZC" id="S0J-Af-BYm"/>
+                <outlet property="btnOk" destination="ku0-o8-nBL" id="N6D-M1-0Zb"/>
                 <outlet property="imgAvartaForProduct" destination="0at-6H-aQh" id="UxB-RN-56P"/>
                 <outlet property="scrollView" destination="CVq-rM-9Fl" id="RYQ-4G-yV7"/>
                 <outlet property="txtfNameProduct" destination="7aQ-hU-6fG" id="p6X-Jo-x4X"/>

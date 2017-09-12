@@ -9,6 +9,7 @@ target 'xxxx' do
   pod 'GooglePlaces'
   pod 'RealmSwift'
   pod 'DateTimePicker'
+  pod 'IQKeyboardManager'
 end
 #post_install do |installer|
 #    installer.pods_project.targets.each do |target|

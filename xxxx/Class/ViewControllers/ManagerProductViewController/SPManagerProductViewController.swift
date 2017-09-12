@@ -75,7 +75,10 @@ extension SPManagerProductViewController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let editViewVC = SPAddProductViewController()
+        editViewVC.isEditFlag = true
+        editViewVC.productForEdit = arrayProduct[indexPath.row]
+        SPTabbarViewController.ShareInstance.navigationController?.pushViewController(editViewVC, animated: true)
     }
 }
 

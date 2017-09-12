@@ -25,6 +25,7 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var btnDateTime: UIButton!
     @IBOutlet weak var txtfUnit: UITextField!
+    @IBOutlet weak var btnOk: UIButton!
 
     let imagePiker = UIImagePickerController()
     var imageUrlForAvarta:String = ""
@@ -32,23 +33,60 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
     var date:Date = Date()
     var formatter:DateFormatter = DateFormatter()
     var isEditFlag:Bool = false
+    var productForEdit = SPProduct()
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePiker.delegate = self
         SPTabbarViewController.ShareInstance.navigationController?.isNavigationBarHidden = true
         self.navigationController?.isNavigationBarHidden = false
-        self.navigationItem.title = "Create Product"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+       
         date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = DATA.DATEFORMAT
         result = formatter.string(from: date)
         self.btnDateTime.setTitle(result, for: .normal)
-        
+        self.navigationItem.title = "Create Product"
+        self.btnOk.setTitle("Save", for: .normal)
+        if self.isEditFlag {
+            self.btnOk.setTitle("Update", for: .normal)
+            self.setRightBarIconParent()
+            self.navigationItem.title = "Edit And Delete Product"
+            self.txtfNameProduct.text = self.productForEdit.name
+            self.txtfProducer.text = self.productForEdit.producer
+            self.txtfTotal.text = "\(self.productForEdit.totalProduct)"
+            self.txtfOriginPrice.text = "\(self.productForEdit.originPrice)"
+            self.txtfPrice.text = "\(self.productForEdit.price)"
+            self.result = formatter.string(from: self.productForEdit.startDate)
+            self.btnDateTime.setTitle(self.result, for: .normal)
+            self.txtfUnit.text = self.productForEdit.unit
+            if let urlImage = URL(string: productForEdit.imageUrl) {
+                let assets = PHAsset.fetchAssets(withALAssetURLs: [urlImage], options: nil)
+                if let p = assets.firstObject {
+                    self.imgAvartaForProduct.image = getAssetThumbnail(asset: p)
+                }
+            }
+
+        }
+  
+    }
+    
+    override func clickRightButton() {
+        self.showAlerComfirm(message: "Do yout want delete \(productForEdit.name) ?", title: "Comfirm") { (isDelete) in
+            if isDelete {
+                let realm = try! Realm()
+                if let productForDelete = realm.objects(SPProduct.self).filter("id == \(self.productForEdit.id)").first {
+                    try! realm.write {
+                        realm.delete(productForDelete)
+                    }
+                }
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -86,22 +124,44 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
             return
         }
         let product = SPProduct()
-            product.id = product.incrementID()
-            product.name = nameProudct
-            product.totalProduct = Int(totalProduct) ?? 0
-            product.imageUrl = self.imageUrlForAvarta
-            product.producer = producer
-            product.originPrice = Int(originPrice) ?? 0
-            product.price = Int(price) ?? 0
-            product.inventory = 0
-            product.startDate = self.date
-            product.unit = unit
+        product.id = product.incrementID()
+        product.name = nameProudct
+        product.totalProduct = Int(totalProduct) ?? 0
+        product.imageUrl = self.imageUrlForAvarta
+        product.producer = producer
+        product.originPrice = Int(originPrice) ?? 0
+        product.price = Int(price) ?? 0
+        product.inventory = 0
+        product.startDate = self.date
+        product.unit = unit
+        
         let realm = try! Realm()
         
-        try! realm.write {
-            realm.add(product)
+        if self.isEditFlag {
+            let productForUpdate = realm.objects(SPProduct.self).filter("id == \(productForEdit.id)").first
+            try! realm.write {
+                productForUpdate?.name = nameProudct
+                productForUpdate?.totalProduct = Int(totalProduct) ?? 0
+                productForUpdate?.imageUrl = self.imageUrlForAvarta
+                productForUpdate?.producer = producer
+                productForUpdate?.originPrice = Int(originPrice) ?? 0
+                productForUpdate?.price = Int(price) ?? 0
+                productForUpdate?.inventory = 0
+                productForUpdate?.startDate = self.date
+                productForUpdate?.unit = unit
+            }
+            
+            
+        } else {
+            try! realm.write {
+               realm.add(product)
+            }
         }
-        self.showAlerSuccess(message: "Add Product \(product.name) success !", title: "Done")
+
+
+        self.showAlerSuccess(message: "Add Product \(product.name) success !", title: "Done", buttonTitle: "Ok") { 
+            self.navigationController?.popViewController(animated: true)
+        }
         
     }
     @IBAction func clickSelectImage(_ sender: Any) {
@@ -114,12 +174,27 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
        
     }
     
-    func showAlerSuccess(message:String,title:String) {
+    func showAlerSuccess(message:String,title:String, buttonTitle: String, completed: @escaping() -> Void) {
+       
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         
-        alert.addAction(UIAlertAction( title: "Ok", style: .default, handler: { (complete) in
-             self.navigationController?.popViewController(animated: true)
-           
+        alert.addAction(UIAlertAction( title: buttonTitle, style: .default, handler: { (complete) in
+            completed()
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func showAlerComfirm(message:String,title:String, completed: @escaping(Bool) -> Void) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (cancelComplete) in
+            completed(false)
+        }))
+        
+        alert.addAction(UIAlertAction( title: "Ok", style: .default, handler: { (OkComplete) in
+            completed(true)
         }))
         
         self.present(alert, animated: true, completion: nil)
