@@ -17,7 +17,6 @@ class SPBaseViewController: SPBaseParentViewController{
         self.view.bringSubview(toFront: indicator)
         self.indicator.backgroundColor = UIColor.clear
         self.indicator.frame = CGRect( x: UIScreen.main.bounds.width/2 - 25, y: UIScreen.main.bounds.height/2 - 25 - self.heightStatusBar() - 55, width: 50, height: 50)
-        self.navigationController?.navigationBar.backgroundColor = .blue
         self.navigationController?.isNavigationBarHidden = true
         
     }

@@ -58,6 +58,7 @@ class SPTabbarViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = false
 //        self.navigationController?.navigationItem.title = "Create Product"
         self.navigationItem.title = "aaaa"
+        self.navigationController?.navigationBar.barTintColor = UIColor.SPNavigationColor()
         SPManagerProductViewController.ShareInstance.loadData()
         
     }
@@ -113,10 +114,9 @@ class SPTabbarViewController: UIViewController {
         let leftButton = UIButton(type: .custom)
         leftButton.addTarget(self, action: #selector(self.clickRightButtom), for: .touchUpInside)
         leftButton.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
-        leftButton.setImage(UIImage(named: "menu_button"), for: .normal)
+        leftButton.setImage(UIImage(named: "action"), for: .normal)
         leftButton.contentMode = .scaleAspectFit
         let leftView = UIView(x: 0, y: 0, width: 32, height: 32)
-        leftView.backgroundColor = .red
         leftView.addSubview(leftButton)
         let rightBarButton = UIBarButtonItem(customView: leftView)
         navigationItem.setLeftBarButton(rightBarButton, animated: true)
@@ -127,10 +127,9 @@ class SPTabbarViewController: UIViewController {
         let leftButton = UIButton(type: .custom)
         leftButton.addTarget(self, action: #selector(self.clickLeftButtom), for: .touchUpInside)
         leftButton.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
-        leftButton.setImage(UIImage(named: "menu_button"), for: .normal)
+        leftButton.setImage(UIImage(named: "addnew"), for: .normal)
         leftButton.contentMode = .scaleAspectFit
         let leftView = UIView(x: 0, y: 0, width: 32, height: 32)
-        leftView.backgroundColor = .red
         leftView.addSubview(leftButton)
         let rightBarButton = UIBarButtonItem(customView: leftView)
         navigationItem.setRightBarButton(rightBarButton, animated: true)

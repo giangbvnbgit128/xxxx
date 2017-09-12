@@ -31,6 +31,7 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
     var result:String = ""
     var date:Date = Date()
     var formatter:DateFormatter = DateFormatter()
+    var isEditFlag:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePiker.delegate = self
@@ -41,11 +42,13 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = DATA.DATEFORMAT
         result = formatter.string(from: date)
         self.btnDateTime.setTitle(result, for: .normal)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -83,6 +86,7 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
             return
         }
         let product = SPProduct()
+            product.id = product.incrementID()
             product.name = nameProudct
             product.totalProduct = Int(totalProduct) ?? 0
             product.imageUrl = self.imageUrlForAvarta

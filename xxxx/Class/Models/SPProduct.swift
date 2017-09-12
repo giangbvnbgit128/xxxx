@@ -10,7 +10,7 @@ import RealmSwift
 import Realm
 
 class SPCategoryProduct: Object {
-   dynamic var id:Int = -1
+   dynamic var id:Int = 0
    dynamic var inventory:Int = 0
    dynamic var totalProduct:Int = 0
    dynamic var name:String = ""
@@ -22,10 +22,16 @@ class SPCategoryProduct: Object {
    dynamic var producer:String = ""
    dynamic var unit:String = ""
    
+    override class func primaryKey() -> String? {
+        return "id"
+    }
+
 }
 
 
 class SPProduct: SPCategoryProduct {
-//    var gourp:[SPCategoryProduct] = []
-    
+    func incrementID() -> Int {
+        let realm = try! Realm()
+        return (realm.objects(SPProduct.self).max(ofProperty: "id") as Int? ?? 0) + 1
+    }
 }

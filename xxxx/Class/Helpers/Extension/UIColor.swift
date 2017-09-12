@@ -84,5 +84,8 @@ public extension UIColor {
     static func kosUnSelectedGrayColor() -> UIColor {
         return UIColor(hex: "#CCCCCC")
     }
-
+    
+    static func SPNavigationColor() -> UIColor {
+        return UIColor(hex: "#FF6D4B")
+    }
 }

@@ -33,6 +33,7 @@ class SPProductTableViewCell: SPBaseTableViewCell {
     }
     
     func ConfigCell(product:SPProduct) {
+        print("product id = \(product.id)")
         nameProduct.text = product.name
         lblTotal.text = "\(product.totalProduct)"
         lblInventory.text = "\(product.inventory)"
