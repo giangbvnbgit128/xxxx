@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B2619C71F67C79C00DB5479 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2619C61F67C79C00DB5479 /* AppDelegate.swift */; };
+		4B2619CB1F67C81500DB5479 /* IQKeyboardManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2619CA1F67C81500DB5479 /* IQKeyboardManager.framework */; };
 		4B33C8F51F62418900A340EA /* SPMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B33C8F31F62418900A340EA /* SPMapsViewController.swift */; };
 		4B33C8F61F62418900A340EA /* SPMapsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B33C8F41F62418900A340EA /* SPMapsViewController.xib */; };
 		4B33C8F81F62450F00A340EA /* DATA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B33C8F71F62450F00A340EA /* DATA.swift */; };
@@ -65,7 +67,6 @@
 		4B37F84A1F60FF87006F5EC3 /* SPOrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B37F83F1F60FF87006F5EC3 /* SPOrderViewController.xib */; };
 		4B37F8501F60FFD2006F5EC3 /* SPLeftMeuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B37F84E1F60FFD2006F5EC3 /* SPLeftMeuViewController.swift */; };
 		4B37F8511F60FFD2006F5EC3 /* SPLeftMeuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B37F84F1F60FFD2006F5EC3 /* SPLeftMeuViewController.xib */; };
-		4B3FB1811F60E77F00B335FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3FB1801F60E77F00B335FB /* AppDelegate.swift */; };
 		4B3FB1861F60E78000B335FB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B3FB1841F60E78000B335FB /* Main.storyboard */; };
 		4B3FB1881F60E78000B335FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B3FB1871F60E78000B335FB /* Assets.xcassets */; };
 		4B3FB18B1F60E78000B335FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B3FB1891F60E78000B335FB /* LaunchScreen.storyboard */; };
@@ -108,6 +109,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B2619C61F67C79C00DB5479 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4B2619C81F67C7BE00DB5479 /* IQKeyboardManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IQKeyboardManager.framework; path = "Pods/../build/Debug-iphoneos/IQKeyboardManager/IQKeyboardManager.framework"; sourceTree = "<group>"; };
+		4B2619CA1F67C81500DB5479 /* IQKeyboardManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IQKeyboardManager.framework; path = "../Library/Developer/Xcode/DerivedData/Build/Products/Debug-iphonesimulator/IQKeyboardManager/IQKeyboardManager.framework"; sourceTree = "<group>"; };
 		4B33C8F31F62418900A340EA /* SPMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPMapsViewController.swift; sourceTree = "<group>"; };
 		4B33C8F41F62418900A340EA /* SPMapsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPMapsViewController.xib; sourceTree = "<group>"; };
 		4B33C8F71F62450F00A340EA /* DATA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DATA.swift; sourceTree = "<group>"; };
@@ -167,7 +171,6 @@
 		4B37F84E1F60FFD2006F5EC3 /* SPLeftMeuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPLeftMeuViewController.swift; sourceTree = "<group>"; };
 		4B37F84F1F60FFD2006F5EC3 /* SPLeftMeuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPLeftMeuViewController.xib; sourceTree = "<group>"; };
 		4B3FB17D1F60E77F00B335FB /* xxxx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xxxx.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B3FB1801F60E77F00B335FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../../AppDelegate.swift; sourceTree = "<group>"; };
 		4B3FB1851F60E78000B335FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4B3FB1871F60E78000B335FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B3FB18A1F60E78000B335FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -204,6 +207,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B2619CB1F67C81500DB5479 /* IQKeyboardManager.framework in Frameworks */,
 				53AE2E671F65C6500079168D /* Photos.framework in Frameworks */,
 				4B37F7FB1F60F62A006F5EC3 /* AKSideMenu.framework in Frameworks */,
 				4B37F7FC1F60F62A006F5EC3 /* Alamofire.framework in Frameworks */,
@@ -229,6 +233,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B2619C51F67C79C00DB5479 /* Appdelegate */ = {
+			isa = PBXGroup;
+			children = (
+				4B2619C61F67C79C00DB5479 /* AppDelegate.swift */,
+			);
+			path = Appdelegate;
+			sourceTree = "<group>";
+		};
 		4B33C8F21F62416600A340EA /* MapsViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -393,7 +405,7 @@
 		4B3FB1AE1F60E89600B335FB /* Class */ = {
 			isa = PBXGroup;
 			children = (
-				4B3FB1AF1F60E89600B335FB /* Appdelegate */,
+				4B2619C51F67C79C00DB5479 /* Appdelegate */,
 				4B3FB1B01F60E89600B335FB /* Base */,
 				4B3FB1B11F60E89600B335FB /* Helpers */,
 				4B3FB1B71F60E89600B335FB /* Libraries */,
@@ -402,14 +414,6 @@
 				4B3FB1BA1F60E89600B335FB /* Views */,
 			);
 			path = Class;
-			sourceTree = "<group>";
-		};
-		4B3FB1AF1F60E89600B335FB /* Appdelegate */ = {
-			isa = PBXGroup;
-			children = (
-				4B3FB1801F60E77F00B335FB /* AppDelegate.swift */,
-			);
-			path = Appdelegate;
 			sourceTree = "<group>";
 		};
 		4B3FB1B01F60E89600B335FB /* Base */ = {
@@ -571,6 +575,8 @@
 		6E9B110D0F8FEE14B3CC9FB0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4B2619CA1F67C81500DB5479 /* IQKeyboardManager.framework */,
+				4B2619C81F67C7BE00DB5479 /* IQKeyboardManager.framework */,
 				53AE2E661F65C6500079168D /* Photos.framework */,
 				4B37F7F81F60F62A006F5EC3 /* AKSideMenu.framework */,
 				4B37F7F91F60F62A006F5EC3 /* Alamofire.framework */,
@@ -813,6 +819,7 @@
 				4B37F7F01F60F533006F5EC3 /* CAPSPageMenu+UIScrollViewDelegate.swift in Sources */,
 				4B37F7BC1F60F1DB006F5EC3 /* GCD.swift in Sources */,
 				4B37F7C81F60F1DB006F5EC3 /* UIDevice.swift in Sources */,
+				4B2619C71F67C79C00DB5479 /* AppDelegate.swift in Sources */,
 				4B37F7F31F60F533006F5EC3 /* MenuItemView.swift in Sources */,
 				4B37F7C11F60F1DB006F5EC3 /* NSString.swift in Sources */,
 				534DA0371F62FF710033E5FE /* SPBaseParentViewController.swift in Sources */,
@@ -845,7 +852,6 @@
 				4B37F7BB1F60F1DB006F5EC3 /* Float.swift in Sources */,
 				4B37F7BE1F60F1DB006F5EC3 /* NSDate.swift in Sources */,
 				4B9127CA1F61352E004DF093 /* SPItemLeftMenuTableViewCell.swift in Sources */,
-				4B3FB1811F60E77F00B335FB /* AppDelegate.swift in Sources */,
 				4B37F7F11F60F533006F5EC3 /* CAPSPageMenu.swift in Sources */,
 				4B37F7BF1F60F1DB006F5EC3 /* NSNotificationCenter.swift in Sources */,
 				4B33C8FA1F6272B200A340EA /* SPOrderModel.swift in Sources */,
@@ -1017,6 +1023,10 @@
 			baseConfigurationReference = A652FA5C4DCC872C174DC87A /* Pods-xxxx.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/IQKeyboardManager",
+				);
 				INFOPLIST_FILE = xxxx/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = a.xxxx;
@@ -1030,6 +1040,10 @@
 			baseConfigurationReference = FE75EEDB1E1A67AA8DAF4EAF /* Pods-xxxx.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/IQKeyboardManager",
+				);
 				INFOPLIST_FILE = xxxx/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = a.xxxx;
