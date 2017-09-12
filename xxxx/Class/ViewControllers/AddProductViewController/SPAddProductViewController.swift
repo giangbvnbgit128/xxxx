@@ -26,7 +26,9 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
     @IBOutlet weak var btnDateTime: UIButton!
     @IBOutlet weak var txtfUnit: UITextField!
     @IBOutlet weak var btnOk: UIButton!
+    @IBOutlet weak var lblunitForOriginPrice: UILabel!
 
+    @IBOutlet weak var lblUnitSalePrice: UILabel!
     let imagePiker = UIImagePickerController()
     var imageUrlForAvarta:String = ""
     var result:String = ""
@@ -44,6 +46,8 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
        
+        self.txtfUnit.delegate = self
+        
         date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = DATA.DATEFORMAT
@@ -116,21 +120,39 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
         if nameProudct == "" {
             self.showAler(message: "Product name not null", title: "Error")
             return
-        } else if totalProduct == "" {
+        } else if totalProduct == ""{
             self.showAler(message: "Total product not null", title: "Error")
             return
         } else if originPrice == "" {
             self.showAler(message: "Origin price not null", title: "Error")
             return
         }
+        
+        // total ,  price and savePrice
+        
+        
+        
         let product = SPProduct()
         product.id = product.incrementID()
         product.name = nameProudct
-        product.totalProduct = Int(totalProduct) ?? 0
+        if let total = Int(totalProduct) {
+           product.totalProduct = total
+        } else {
+            self.showAler(message: "Total product not avalible", title: "Error")
+        }
         product.imageUrl = self.imageUrlForAvarta
         product.producer = producer
-        product.originPrice = Int(originPrice) ?? 0
-        product.price = Int(price) ?? 0
+        if let oriPrice = Int(originPrice) {
+            product.originPrice = oriPrice
+        } else {
+            self.showAler(message: "Origin price not avalible", title: "Error")
+        }
+        
+        if let salePrice = Int(price) {
+            product.price = salePrice
+        } else {
+            self.showAler(message: "Sale price not avalible", title: "Error")
+        }
         product.inventory = 0
         product.startDate = self.date
         product.unit = unit
@@ -249,3 +271,14 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
 
 }
 
+extension SPAddProductViewController: UITextFieldDelegate {
+
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        if textField == self.txtfUnit {
+            self.lblUnitSalePrice.text = textField.text
+            self.lblunitForOriginPrice.text = textField.text
+        }
+
+    }
+    
+}

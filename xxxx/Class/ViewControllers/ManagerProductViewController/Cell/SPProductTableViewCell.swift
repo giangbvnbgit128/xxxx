@@ -39,8 +39,11 @@ class SPProductTableViewCell: SPBaseTableViewCell {
         lblInventory.text = "\(product.inventory)"
         lblPrice.text = "\(product.price)"
         lblStartDate.text = self.formatDate.string(from: product.startDate)
+        print("thay image  \(product.name) urlImage = \(product.imageUrl)")
         if let urlImage = URL(string: product.imageUrl) {
             imgAvartaProduct.image = self.displayImageFromAsset(imageUrl: urlImage)
+        } else {
+            print("khong tim thay image  \(product.name) urlImage = \(product.imageUrl)")
         }
 
     }
