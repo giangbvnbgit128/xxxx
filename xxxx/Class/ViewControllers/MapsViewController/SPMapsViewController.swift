@@ -16,7 +16,7 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
 
     var locationManager = CLLocationManager()
     var mapView = GMSMapView()
-    
+    var myLocation:[CLLocation] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initGoogleMap()
@@ -49,13 +49,15 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let location = locations.last
-        
-        let camera = GMSCameraPosition.camera(withLatitude: (location?.coordinate.latitude)!, longitude: (location?.coordinate.longitude)!, zoom: 15.0)
-        
-        self.mapView.animate(to: camera)
-        self.locationManager.stopUpdatingLocation()
-        
+        if let location = locations.last {
+            let camera = GMSCameraPosition.camera(withLatitude: (location.coordinate.latitude), longitude: (location.coordinate.longitude), zoom: 15.0)
+            self.mapView.animate(to: camera)
+            self.locationManager.stopUpdatingLocation()
+            print("MyLocation = \(location.coordinate)")
+            
+            self.myLocation.append(location)
+        }
+
     }
     
     // MARK: GMSMapview Delegate
@@ -89,7 +91,7 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
         self.locationManager.startUpdatingLocation()
         self.present(autoCompleteController, animated: true, completion: nil)
     }
-    
+// MARK: - DrawPath
     func drawPath(startLocation: CLLocation, endLocation: CLLocation)
     {
         let origin = "\(startLocation.coordinate.latitude),\(startLocation.coordinate.longitude)"
@@ -117,7 +119,7 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
                 let polyline = GMSPolyline.init(path: path)
                 polyline.strokeWidth = 4
                 polyline.strokeColor = UIColor.red
-                polyline.map = self.googleMaps
+                polyline.map = self.mapView
             }
             
         }
@@ -126,7 +128,7 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
 }
 
 extension SPMapsViewController: GMSAutocompleteViewControllerDelegate ,GMSMapViewDelegate {
-
+// MARK: - AutoComplete
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         let camera = GMSCameraPosition.camera(withLatitude: place.coordinate.latitude, longitude: place.coordinate.longitude, zoom: 15.0)
         self.mapView.camera = camera
@@ -134,11 +136,17 @@ extension SPMapsViewController: GMSAutocompleteViewControllerDelegate ,GMSMapVie
         marker.position = CLLocationCoordinate2D(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
         marker.title = "Sydney"
         marker.snippet = "Australia"
-        
         marker.map = mapView
-
+        let location:CLLocation = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
         
-        self.dismiss(animated: true, completion: nil) // dismiss after select place
+        myLocation.append(location)
+        self.dismiss(animated: true) {
+            for i in  0..<self.myLocation.count - 1 {
+                self.drawPath(startLocation: self.myLocation[i], endLocation: self.myLocation[i + 1])
+            }
+        }
+        
+        
     }
     
     func wasCancelled(_ viewController: GMSAutocompleteViewController) {
