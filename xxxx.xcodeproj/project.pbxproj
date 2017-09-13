@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4B2619C71F67C79C00DB5479 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2619C61F67C79C00DB5479 /* AppDelegate.swift */; };
-		4B2619CB1F67C81500DB5479 /* IQKeyboardManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2619CA1F67C81500DB5479 /* IQKeyboardManager.framework */; };
 		4B33C8F51F62418900A340EA /* SPMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B33C8F31F62418900A340EA /* SPMapsViewController.swift */; };
 		4B33C8F61F62418900A340EA /* SPMapsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B33C8F41F62418900A340EA /* SPMapsViewController.xib */; };
 		4B33C8F81F62450F00A340EA /* DATA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B33C8F71F62450F00A340EA /* DATA.swift */; };
@@ -207,7 +206,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B2619CB1F67C81500DB5479 /* IQKeyboardManager.framework in Frameworks */,
 				53AE2E671F65C6500079168D /* Photos.framework in Frameworks */,
 				4B37F7FB1F60F62A006F5EC3 /* AKSideMenu.framework in Frameworks */,
 				4B37F7FC1F60F62A006F5EC3 /* Alamofire.framework in Frameworks */,
@@ -770,7 +768,6 @@
 				"${BUILT_PRODUCTS_DIR}/AKSideMenu/AKSideMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/DateTimePicker/DateTimePicker.framework",
-				"${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
@@ -780,7 +777,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AKSideMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DateTimePicker.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
