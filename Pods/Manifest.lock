@@ -15,6 +15,7 @@ PODS:
   - Realm/Headers (2.10.0)
   - RealmSwift (2.10.0):
     - Realm (= 2.10.0)
+  - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
   - AKSideMenu
@@ -24,6 +25,7 @@ DEPENDENCIES:
   - GooglePlaces
   - ObjectMapper
   - RealmSwift
+  - SwiftyJSON
 
 SPEC CHECKSUMS:
   AKSideMenu: 15c78ef0f6b4fee7e7175f8828b08ae4bcbc86ac
@@ -34,7 +36,8 @@ SPEC CHECKSUMS:
   ObjectMapper: 3d571bb5af471c779e1160828cd9ad5c4ef90958
   Realm: 98b3a25643cf6b3e07d2b99fb43fe0eb9c801dec
   RealmSwift: 34073ad3a31232bbaf7c0db898c037940284cba2
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 419b14b0849eb03ac9836c564105e763135832db
+PODFILE CHECKSUM: 910a81201448e045e5cd9e92ffa0a37146b9b14d
 
 COCOAPODS: 1.3.0.beta.3

@@ -9,6 +9,8 @@
 import UIKit
 import GoogleMaps
 import GooglePlaces
+import SwiftyJSON
+import Alamofire
 
 class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegate {
 
@@ -88,6 +90,39 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
         self.present(autoCompleteController, animated: true, completion: nil)
     }
     
+    func drawPath(startLocation: CLLocation, endLocation: CLLocation)
+    {
+        let origin = "\(startLocation.coordinate.latitude),\(startLocation.coordinate.longitude)"
+        let destination = "\(endLocation.coordinate.latitude),\(endLocation.coordinate.longitude)"
+        
+        
+        let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving"
+        
+        Alamofire.request(url).responseJSON { response in
+            
+            print(response.request as Any)  // original URL request
+            print(response.response as Any) // HTTP URL response
+            print(response.data as Any)     // server data
+            print(response.result as Any)   // result of response serialization
+            
+            let json = JSON(data: response.data!)
+            let routes = json["routes"].arrayValue
+            
+            // print route using Polyline
+            for route in routes
+            {
+                let routeOverviewPolyline = route["overview_polyline"].dictionary
+                let points = routeOverviewPolyline?["points"]?.stringValue
+                let path = GMSPath.init(fromEncodedPath: points!)
+                let polyline = GMSPolyline.init(path: path)
+                polyline.strokeWidth = 4
+                polyline.strokeColor = UIColor.red
+                polyline.map = self.googleMaps
+            }
+            
+        }
+    }
+    
 }
 
 extension SPMapsViewController: GMSAutocompleteViewControllerDelegate ,GMSMapViewDelegate {
@@ -95,6 +130,14 @@ extension SPMapsViewController: GMSAutocompleteViewControllerDelegate ,GMSMapVie
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         let camera = GMSCameraPosition.camera(withLatitude: place.coordinate.latitude, longitude: place.coordinate.longitude, zoom: 15.0)
         self.mapView.camera = camera
+        let marker = GMSMarker()
+        marker.position = CLLocationCoordinate2D(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
+        marker.title = "Sydney"
+        marker.snippet = "Australia"
+        
+        marker.map = mapView
+
+        
         self.dismiss(animated: true, completion: nil) // dismiss after select place
     }
     
