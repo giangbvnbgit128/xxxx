@@ -87,6 +87,8 @@
 		4B9127E61F614910004DF093 /* SPRecipentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B9127E41F614910004DF093 /* SPRecipentTableViewCell.xib */; };
 		534DA0371F62FF710033E5FE /* SPBaseParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534DA0361F62FF710033E5FE /* SPBaseParentViewController.swift */; };
 		53AE2E671F65C6500079168D /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53AE2E661F65C6500079168D /* Photos.framework */; };
+		53C73EEC1F699BEE00B08EB5 /* SPAddOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C73EEA1F699BEE00B08EB5 /* SPAddOrderViewController.swift */; };
+		53C73EED1F699BEE00B08EB5 /* SPAddOrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53C73EEB1F699BEE00B08EB5 /* SPAddOrderViewController.xib */; };
 		DD010F43BAF6D1CB7D9F55E1 /* Pods_xxxx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2A0EA5D03E5F588F7817BB /* Pods_xxxx.framework */; };
 /* End PBXBuildFile section */
 
@@ -196,6 +198,8 @@
 		4B9127E41F614910004DF093 /* SPRecipentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPRecipentTableViewCell.xib; sourceTree = "<group>"; };
 		534DA0361F62FF710033E5FE /* SPBaseParentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPBaseParentViewController.swift; sourceTree = "<group>"; };
 		53AE2E661F65C6500079168D /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
+		53C73EEA1F699BEE00B08EB5 /* SPAddOrderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPAddOrderViewController.swift; sourceTree = "<group>"; };
+		53C73EEB1F699BEE00B08EB5 /* SPAddOrderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPAddOrderViewController.xib; sourceTree = "<group>"; };
 		A652FA5C4DCC872C174DC87A /* Pods-xxxx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xxxx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-xxxx/Pods-xxxx.debug.xcconfig"; sourceTree = "<group>"; };
 		CD2A0EA5D03E5F588F7817BB /* Pods_xxxx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_xxxx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE75EEDB1E1A67AA8DAF4EAF /* Pods-xxxx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xxxx.release.xcconfig"; path = "Pods/Target Support Files/Pods-xxxx/Pods-xxxx.release.xcconfig"; sourceTree = "<group>"; };
@@ -523,6 +527,7 @@
 		4B3FB1B91F60E89600B335FB /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				53C73EE81F699B6200B08EB5 /* AddOrderViewController */,
 				4B33C9071F62905A00A340EA /* AddProductViewController */,
 				4B33C8FD1F627E4400A340EA /* ManagerProductViewController */,
 				4B33C8F21F62416600A340EA /* MapsViewController */,
@@ -566,6 +571,23 @@
 			children = (
 				4B9127E31F614910004DF093 /* SPRecipentTableViewCell.swift */,
 				4B9127E41F614910004DF093 /* SPRecipentTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		53C73EE81F699B6200B08EB5 /* AddOrderViewController */ = {
+			isa = PBXGroup;
+			children = (
+				53C73EE91F699B6200B08EB5 /* Cell */,
+				53C73EEA1F699BEE00B08EB5 /* SPAddOrderViewController.swift */,
+				53C73EEB1F699BEE00B08EB5 /* SPAddOrderViewController.xib */,
+			);
+			path = AddOrderViewController;
+			sourceTree = "<group>";
+		};
+		53C73EE91F699B6200B08EB5 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -705,6 +727,7 @@
 			files = (
 				4B9127C31F61338D004DF093 /* SPProfileTableViewCell.xib in Resources */,
 				4B9127C71F6134DB004DF093 /* SPInforTableViewCell.xib in Resources */,
+				53C73EED1F699BEE00B08EB5 /* SPAddOrderViewController.xib in Resources */,
 				4B9127A51F610259004DF093 /* SPTabbarViewController.xib in Resources */,
 				4B33C8F61F62418900A340EA /* SPMapsViewController.xib in Resources */,
 				4B3FB18B1F60E78000B335FB /* LaunchScreen.storyboard in Resources */,
@@ -815,6 +838,7 @@
 			files = (
 				4B37F7D21F60F1DB006F5EC3 /* UIViewController.swift in Sources */,
 				4B37F7F01F60F533006F5EC3 /* CAPSPageMenu+UIScrollViewDelegate.swift in Sources */,
+				53C73EEC1F699BEE00B08EB5 /* SPAddOrderViewController.swift in Sources */,
 				4B37F7BC1F60F1DB006F5EC3 /* GCD.swift in Sources */,
 				4B37F7C81F60F1DB006F5EC3 /* UIDevice.swift in Sources */,
 				4B2619C71F67C79C00DB5479 /* AppDelegate.swift in Sources */,

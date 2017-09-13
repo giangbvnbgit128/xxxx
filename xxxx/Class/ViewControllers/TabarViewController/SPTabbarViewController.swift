@@ -143,6 +143,9 @@ class SPTabbarViewController: UIViewController {
         if (tabbarIndex == indexTabbar.productTabbar) && flagMove {
             let addVC = SPAddProductViewController()
             self.navigationController?.pushViewController(addVC, animated: true)
+        } else if tabbarIndex == indexTabbar.orderTabbar && flagMove {
+            let addOrderVC = SPAddOrderViewController()
+            self.navigationController?.pushViewController(addOrderVC, animated: true)
         }
         
     }
