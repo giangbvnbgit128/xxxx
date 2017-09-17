@@ -86,6 +86,7 @@
 		4B9127E51F614910004DF093 /* SPRecipentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9127E31F614910004DF093 /* SPRecipentTableViewCell.swift */; };
 		4B9127E61F614910004DF093 /* SPRecipentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B9127E41F614910004DF093 /* SPRecipentTableViewCell.xib */; };
 		534DA0371F62FF710033E5FE /* SPBaseParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534DA0361F62FF710033E5FE /* SPBaseParentViewController.swift */; };
+		538FC3B01F6E1BF600F7D5D5 /* SPAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538FC3AF1F6E1BF600F7D5D5 /* SPAddress.swift */; };
 		53AE2E671F65C6500079168D /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53AE2E661F65C6500079168D /* Photos.framework */; };
 		53C73EEC1F699BEE00B08EB5 /* SPAddOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C73EEA1F699BEE00B08EB5 /* SPAddOrderViewController.swift */; };
 		53C73EED1F699BEE00B08EB5 /* SPAddOrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53C73EEB1F699BEE00B08EB5 /* SPAddOrderViewController.xib */; };
@@ -197,6 +198,7 @@
 		4B9127E31F614910004DF093 /* SPRecipentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPRecipentTableViewCell.swift; sourceTree = "<group>"; };
 		4B9127E41F614910004DF093 /* SPRecipentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPRecipentTableViewCell.xib; sourceTree = "<group>"; };
 		534DA0361F62FF710033E5FE /* SPBaseParentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPBaseParentViewController.swift; sourceTree = "<group>"; };
+		538FC3AF1F6E1BF600F7D5D5 /* SPAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPAddress.swift; sourceTree = "<group>"; };
 		53AE2E661F65C6500079168D /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		53C73EEA1F699BEE00B08EB5 /* SPAddOrderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPAddOrderViewController.swift; sourceTree = "<group>"; };
 		53C73EEB1F699BEE00B08EB5 /* SPAddOrderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPAddOrderViewController.xib; sourceTree = "<group>"; };
@@ -520,6 +522,7 @@
 			children = (
 				4B33C8F91F6272B200A340EA /* SPOrderModel.swift */,
 				4B33C8FB1F62763A00A340EA /* SPProduct.swift */,
+				538FC3AF1F6E1BF600F7D5D5 /* SPAddress.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -875,6 +878,7 @@
 				4B37F7BE1F60F1DB006F5EC3 /* NSDate.swift in Sources */,
 				4B9127CA1F61352E004DF093 /* SPItemLeftMenuTableViewCell.swift in Sources */,
 				4B37F7F11F60F533006F5EC3 /* CAPSPageMenu.swift in Sources */,
+				538FC3B01F6E1BF600F7D5D5 /* SPAddress.swift in Sources */,
 				4B37F7BF1F60F1DB006F5EC3 /* NSNotificationCenter.swift in Sources */,
 				4B33C8FA1F6272B200A340EA /* SPOrderModel.swift in Sources */,
 				4B33C90B1F62918400A340EA /* SPAddProductViewController.swift in Sources */,

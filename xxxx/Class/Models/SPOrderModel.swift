@@ -6,13 +6,15 @@
 //  Copyright © 2017 Bui Van Giang. All rights reserved.
 //
 
-import Foundation
+import RealmSwift
+import Realm
 
-class Location {
+
+class Location:NSObject {
     var latitude:Double = 0.0
     var longitude:Double = 0.0
     
-    init() {
+    override init() {
     }
     init(latitude:Double, longitude:Double) {
         
@@ -22,18 +24,25 @@ class Location {
 }
 
 class SPOrderModel: NSObject {
-    var nameGuest:String = ""
-    var phoneNumber:String = ""
-    var address:String = ""
-    var product:SPProduct = SPProduct()
-    var des:String = ""
-    var paid:Bool = false
-    var categoryId:Int = -1
-    var categoryName:String = ""
-    var location:Location = Location()
-    
+    dynamic var oderId:String = ""
+    dynamic var nameGuest:String = ""
+    dynamic var phoneNumber:String = ""
+    dynamic var address:SPAddress = SPAddress() // tao 1 bang rieng address.vaf 1 bang product 
+    dynamic var product:SPProduct = SPProduct()
+    dynamic var numberOfSale:Int = 0
+    dynamic var des:String = ""
+    dynamic var paid:Bool = false
+    dynamic var categoryId:Int = -1
+    dynamic var categoryName:String = ""
+    dynamic var totalProduct:Int = 0
+    dynamic var minTimeShip:Date = Date()
+    dynamic var maxTimeShip:Date = Date()
+    // tao them nhung thang khac
     override init() {
+        
     }
-    
+    override class func primaryKey() -> String? {
+        return "oderId"
+    }
     
 }

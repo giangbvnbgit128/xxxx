@@ -17,6 +17,9 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
     var locationManager = CLLocationManager()
     var mapView = GMSMapView()
     var myLocation:[CLLocation] = []
+    
+    var blockCompleteUpdateAdress: ((GMSPlace)->Void)?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initGoogleMap()
@@ -140,6 +143,10 @@ extension SPMapsViewController: GMSAutocompleteViewControllerDelegate ,GMSMapVie
         let location:CLLocation = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
         
         myLocation.append(location)
+        if let block = blockCompleteUpdateAdress {
+                block(place)
+        }
+        
         self.dismiss(animated: true) {
             for i in  0..<self.myLocation.count - 1 {
                 self.drawPath(startLocation: self.myLocation[i], endLocation: self.myLocation[i + 1])
