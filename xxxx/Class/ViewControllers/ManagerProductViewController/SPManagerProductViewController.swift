@@ -34,9 +34,6 @@ class SPManagerProductViewController: SPBaseViewController {
         tableView.delegate = self
         self.tableView.registerCellNib(SPProductTableViewCell.self)
         Static.instance = self
-        if tableView != nil {
-            self.loadData()
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,7 +45,7 @@ class SPManagerProductViewController: SPBaseViewController {
 
     }
     
-    func loadData() {
+    override func getData() {
         if tableView != nil {
             let realm = try! Realm()
             let puppies = realm.objects(SPProduct.self)
@@ -56,7 +53,9 @@ class SPManagerProductViewController: SPBaseViewController {
             print("Puppies = \(puppies.count)")
             tableView.reloadData()
         }
+ 
     }
+    
 }
 extension SPManagerProductViewController : UITableViewDataSource {
     

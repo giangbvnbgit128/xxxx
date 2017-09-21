@@ -22,6 +22,11 @@ class SPBaseViewController: SPBaseParentViewController{
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.getData()
+    }
+    
+    func getData() {
+        
     }
     
     func isHiddenNavigationBar(isHidden:Bool) {

@@ -26,6 +26,33 @@ class SPBaseParentViewController: UIViewController {
         
     }
     
+    func showAlerSuccess(message:String,title:String, buttonTitle: String, completed: @escaping() -> Void) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction( title: buttonTitle, style: .default, handler: { (complete) in
+            completed()
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func showAlerComfirm(message:String,title:String, completed: @escaping(Bool) -> Void) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (cancelComplete) in
+            completed(false)
+        }))
+        
+        alert.addAction(UIAlertAction( title: "Ok", style: .default, handler: { (OkComplete) in
+            completed(true)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
     func setRightBarIconParent() {
         let leftButton = UIButton(type: .custom)
         leftButton.addTarget(self, action: #selector(self.clickRightButton), for: .touchUpInside)

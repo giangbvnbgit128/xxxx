@@ -32,6 +32,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
     
     @IBOutlet weak var selectProductView: UIView!
     
+    @IBOutlet weak var txtfPhoneNumber: UITextField!
     @IBOutlet weak var viewContentProduct: UIView!
     
     @IBOutlet weak var btnViewCloseSelectProduct: UIButton!
@@ -121,27 +122,51 @@ class SPAddOrderViewController: SPBaseParentViewController {
     @IBAction func clickSelectProduct(_ sender: Any) {
         self.showSelectProduct()
     }
+// MARK: - clickSave order
+    
     @IBAction func clickOk(_ sender: Any) {
          let order = SPOrderModel()
         
         if let nameGuest:String = self.txtfName.text {
             order.nameGuest = nameGuest
         }
+        
+        if let phoneNumber = self.txtfPhoneNumber.text {
+            order.phoneNumber = phoneNumber
+        }
         if let product:SPProduct = self.arrayProduct[0] {
-            order.product = product
+            order.idProduct = product.id
         }
         
         if let totalProduct:Int =  Int(self.txtfTotalProduct.text ?? "0")  {
             order.totalProduct = totalProduct
         }
-        
-        order.address = self.address
+        // save adress . - > lay id luong
+        self.address.id = self.address.incrementID(modelName: SPAddress.self)
+        order.idAddress = self.address.id
         order.minTimeShip = self.dateforMinShip
         order.maxTimeShip = self.dateforMaxShip
         
+        self.saveData(address: self.address, order: order)
         
         
     }
+    
+    func saveData(address:SPAddress, order: SPOrderModel) {
+        
+        let realm = try! Realm()
+        try! realm.write {
+            realm.add(address)
+            realm.add(order)
+        }
+        
+        self.showAlerSuccess(message: "Thành công", title: "Tạo đơn hàng thành công", buttonTitle: "Ok") { 
+             self.navigationController?.popViewController(animated: true)
+        }
+
+    }
+    
+    
     @IBAction func clickAddCoordinate(_ sender: Any) {
         self.showAlertCoordinate()
     }
@@ -151,17 +176,21 @@ class SPAddOrderViewController: SPBaseParentViewController {
     }
 
     @IBAction func clickReset(_ sender: Any) {
+        self.txtfName.text = ""
+        self.txtfPhoneNumber.text = ""
+        self.txtfLatitude.text = ""
+        self.txtfLongtitude.text = ""
+        
     }
     @IBAction func clickSearchAdress(_ sender: Any) {
         let SPMapsVC = SPMapsViewController()
         SPMapsVC.blockCompleteUpdateAdress = {(place) in
             print("place in name = \(place.name)")// minh lay dc toan do ten vi tri.
-//            self.place = place
             self.address.nameAddress = place.name
             self.address.distance = 0
-            self.address.location.latitude = place.coordinate.latitude
-            self.address.location.longitude = place.coordinate.longitude
-            // thieu time
+            self.address.latitude = place.coordinate.latitude
+            self.address.longitude = place.coordinate.longitude
+            // thieu distance - time
         }
         SPTabbarViewController.ShareInstance.navigationController?.pushViewController(SPMapsVC, animated: true)
         
@@ -236,7 +265,6 @@ extension SPAddOrderViewController {
             let realm = try! Realm()
             let puppies = realm.objects(SPProduct.self)
             self.arrayProduct = Array(puppies).reversed()
-            print("Puppies = \(puppies.count)")
             pickerViewSelectProduct.reloadAllComponents()
         }
     }

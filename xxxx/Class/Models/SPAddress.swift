@@ -9,12 +9,11 @@
 import Foundation
 import RealmSwift
 
-class SPAddress {
+class SPAddress: SPBaseModelRealm{
     dynamic var nameAddress:String = ""
-    dynamic var location:Location = Location()
+    dynamic var latitude:Double = 0.0
+    dynamic var longitude:Double = 0.0
     dynamic var distance:Float = Float()
     dynamic var time:Float = Float()
-    init() {
-        
-    }
+
 }

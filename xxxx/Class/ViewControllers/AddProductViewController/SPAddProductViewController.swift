@@ -133,7 +133,7 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
         
         
         let product = SPProduct()
-        product.id = product.incrementID()
+        product.id = product.incrementID(modelName: SPProduct.self)
         product.name = nameProudct
         if let total = Int(totalProduct) {
            product.totalProduct = total
@@ -196,34 +196,6 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
        
     }
     
-    func showAlerSuccess(message:String,title:String, buttonTitle: String, completed: @escaping() -> Void) {
-       
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        
-        alert.addAction(UIAlertAction( title: buttonTitle, style: .default, handler: { (complete) in
-            completed()
-        }))
-        
-        self.present(alert, animated: true, completion: nil)
-        
-    }
-    
-    func showAlerComfirm(message:String,title:String, completed: @escaping(Bool) -> Void) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (cancelComplete) in
-            completed(false)
-        }))
-        
-        alert.addAction(UIAlertAction( title: "Ok", style: .default, handler: { (OkComplete) in
-            completed(true)
-        }))
-        
-        self.present(alert, animated: true, completion: nil)
-        
-    }
-
-
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         // save a PHAsset reference in imagesList array for later use
         if let imageUrl = info[UIImagePickerControllerReferenceURL] as? URL{

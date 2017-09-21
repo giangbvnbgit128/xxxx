@@ -59,7 +59,16 @@ class SPTabbarViewController: UIViewController {
 //        self.navigationController?.navigationItem.title = "Create Product"
         self.navigationItem.title = "aaaa"
         self.navigationController?.navigationBar.barTintColor = UIColor.SPNavigationColor()
-        SPManagerProductViewController.ShareInstance.loadData()
+        
+        switch tabbarIndex {
+        case .orderTabbar:
+            SPOrderViewController.ShareInstance.getData()
+        case .productTabbar:
+            SPManagerProductViewController.ShareInstance.getData()
+        default:
+            break
+        }
+        
         
     }
     override func didReceiveMemoryWarning() {
