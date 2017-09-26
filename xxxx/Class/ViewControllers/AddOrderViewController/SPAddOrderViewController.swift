@@ -39,6 +39,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
     
     @IBOutlet weak var pickerViewSelectProduct: UIPickerView!
     
+    @IBOutlet weak var lblTotalTimeDistance: UILabel!
     var oldFrameAlert:CGRect = CGRect()
     var newFrameAlert:CGRect = CGRect()
     @IBOutlet weak var btnMinTimeShip: UIButton!
@@ -134,7 +135,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
         if let phoneNumber = self.txtfPhoneNumber.text {
             order.phoneNumber = phoneNumber
         }
-        if let product:SPProduct = self.arrayProduct[0] {
+        if let product:SPProduct = self.arrayProduct[self.indexForProduct] {
             order.idProduct = product.id
         }
         
@@ -180,6 +181,14 @@ class SPAddOrderViewController: SPBaseParentViewController {
         self.txtfPhoneNumber.text = ""
         self.txtfLatitude.text = ""
         self.txtfLongtitude.text = ""
+        self.txtfTotalProduct.text = "0"
+        self.btnProduct.setTitle("Chọn sản phẩm", for: .normal)
+        self.btnMinTimeShip.setTitle("Sớm nhất", for: .normal)
+        self.btnMaxTimeShip.setTitle("Muộn nhất", for: .normal)
+        self.btnSearchAdress.setTitle("Tìm Địa chỉ", for: .normal)
+        self.lblDistance.text = ""
+        self.lblTotalTimeDistance.text = "--"
+        self.txtvRs.text = ""
         
     }
     @IBAction func clickSearchAdress(_ sender: Any) {
@@ -320,6 +329,7 @@ extension SPAddOrderViewController: UIPickerViewDataSource , UIPickerViewDelegat
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         // select row.
+        self.indexForProduct = row
 
     }
     

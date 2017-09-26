@@ -91,6 +91,7 @@
 		53C73EEC1F699BEE00B08EB5 /* SPAddOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C73EEA1F699BEE00B08EB5 /* SPAddOrderViewController.swift */; };
 		53C73EED1F699BEE00B08EB5 /* SPAddOrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53C73EEB1F699BEE00B08EB5 /* SPAddOrderViewController.xib */; };
 		53EC07E71F741C3900178D1A /* SPBaseModelRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EC07E61F741C3900178D1A /* SPBaseModelRealm.swift */; };
+		53EE17A71F7AD55800E251BC /* SPDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EE17A61F7AD55800E251BC /* SPDetailRouter.swift */; };
 		DD010F43BAF6D1CB7D9F55E1 /* Pods_xxxx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2A0EA5D03E5F588F7817BB /* Pods_xxxx.framework */; };
 /* End PBXBuildFile section */
 
@@ -204,6 +205,7 @@
 		53C73EEA1F699BEE00B08EB5 /* SPAddOrderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPAddOrderViewController.swift; sourceTree = "<group>"; };
 		53C73EEB1F699BEE00B08EB5 /* SPAddOrderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPAddOrderViewController.xib; sourceTree = "<group>"; };
 		53EC07E61F741C3900178D1A /* SPBaseModelRealm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPBaseModelRealm.swift; sourceTree = "<group>"; };
+		53EE17A61F7AD55800E251BC /* SPDetailRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPDetailRouter.swift; sourceTree = "<group>"; };
 		A652FA5C4DCC872C174DC87A /* Pods-xxxx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xxxx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-xxxx/Pods-xxxx.debug.xcconfig"; sourceTree = "<group>"; };
 		CD2A0EA5D03E5F588F7817BB /* Pods_xxxx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_xxxx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE75EEDB1E1A67AA8DAF4EAF /* Pods-xxxx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xxxx.release.xcconfig"; path = "Pods/Target Support Files/Pods-xxxx/Pods-xxxx.release.xcconfig"; sourceTree = "<group>"; };
@@ -526,6 +528,7 @@
 				4B33C8FB1F62763A00A340EA /* SPProduct.swift */,
 				538FC3AF1F6E1BF600F7D5D5 /* SPAddress.swift */,
 				53EC07E61F741C3900178D1A /* SPBaseModelRealm.swift */,
+				53EE17A61F7AD55800E251BC /* SPDetailRouter.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -876,6 +879,7 @@
 				4B37F7B91F60F1DB006F5EC3 /* Dictionary.swift in Sources */,
 				4B37F7CD1F60F1DB006F5EC3 /* UINavigationController.swift in Sources */,
 				4B9127A41F610259004DF093 /* SPTabbarViewController.swift in Sources */,
+				53EE17A71F7AD55800E251BC /* SPDetailRouter.swift in Sources */,
 				4B33C8F81F62450F00A340EA /* DATA.swift in Sources */,
 				4B37F7C91F60F1DB006F5EC3 /* UIFont.swift in Sources */,
 				4B37F7BB1F60F1DB006F5EC3 /* Float.swift in Sources */,

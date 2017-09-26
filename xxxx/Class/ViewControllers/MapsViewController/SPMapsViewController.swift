@@ -11,6 +11,7 @@ import GoogleMaps
 import GooglePlaces
 import SwiftyJSON
 import Alamofire
+import ObjectMapper
 
 class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegate {
 
@@ -56,7 +57,6 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
             let camera = GMSCameraPosition.camera(withLatitude: (location.coordinate.latitude), longitude: (location.coordinate.longitude), zoom: 15.0)
             self.mapView.animate(to: camera)
             self.locationManager.stopUpdatingLocation()
-            print("MyLocation = \(location.coordinate)")
             
             self.myLocation.append(location)
         }
@@ -99,9 +99,18 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
     {
         let origin = "\(startLocation.coordinate.latitude),\(startLocation.coordinate.longitude)"
         let destination = "\(endLocation.coordinate.latitude),\(endLocation.coordinate.longitude)"
+        let startTime:SPAddress = SPAddress()
+        startTime.latitude = startLocation.coordinate.latitude
+        startTime.longitude = startLocation.coordinate.longitude
         
+        let endtime:SPAddress = SPAddress()
+        endtime.latitude = endLocation.coordinate.latitude
+        endtime.longitude = endLocation.coordinate.longitude
+        
+        self.getDetailRouter(starTime: startTime, endTime: endtime)
         
         let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving"
+        //"https://maps.googleapis.com/maps/api/distancematrix/xml?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Vancouver+BC&mode=bicycling&language=fr-FR&key=YOUR_API_KEY"
         
         Alamofire.request(url).responseJSON { response in
             
@@ -127,11 +136,41 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
             
         }
     }
+// MARK:- get duration and distance
+    func getDetailRouter(starTime:SPAddress , endTime:SPAddress) -> (SPDistance, SPDuration){
+    
+        var duration:SPDuration = SPDuration()
+        var distance:SPDistance = SPDistance()
+        
+        let origin = "\(starTime.latitude),\(starTime.longitude)"
+        let destination = "\(endTime.latitude),\(endTime.longitude)"
+        
+        
+        let url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=\(origin)&destinations=\(destination)&key=\(DATA.APIKEYMAPS.urlEncodeUTF8())"
+        
+        Alamofire.request(url).responseJSON { response in
+        
+            switch response.result {
+            case .success(let value):
+                let newValue = value as? [String : AnyObject]
+                if let menuTabbar = Mapper<SPRow>().mapArray(JSONObject: newValue?["rows"]) {
+                    print("menuTabbar = \(menuTabbar.count)")
+                }
+                break
+            case .failure(let error):
+                print("\(error)")
+                break
+            }
+        }
+        
+        
+        return (distance, duration)
+    }
     
 }
 
 extension SPMapsViewController: GMSAutocompleteViewControllerDelegate ,GMSMapViewDelegate {
-// MARK: - AutoComplete
+// MARK : - AutoComplete
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         let camera = GMSCameraPosition.camera(withLatitude: place.coordinate.latitude, longitude: place.coordinate.longitude, zoom: 15.0)
         self.mapView.camera = camera
@@ -167,4 +206,8 @@ extension SPMapsViewController: GMSAutocompleteViewControllerDelegate ,GMSMapVie
     }
     
 }
+
+
+
+
 
