@@ -13,18 +13,32 @@ import SwiftyJSON
 import Alamofire
 import ObjectMapper
 
+
 class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegate {
 
     var locationManager = CLLocationManager()
     var mapView = GMSMapView()
     var myLocation:[CLLocation] = []
+
+    struct Static {
+        static var instance: SPMapsViewController?
+    }
+    class var ShareInstance: SPMapsViewController {
+        if Static.instance == nil {
+            Static.instance = SPMapsViewController()
+        }
+        return Static.instance!
+    }
     
-    var blockCompleteUpdateAdress: ((GMSPlace)->Void)?
+    var myPosition:SPAddress = SPAddress()
+    var blockCompleteUpdateAdress: ((GMSPlace,SPAddress)->Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initGoogleMap()
         self.setRightBarIconParent()
+        Static.instance = self
+        
     }
 
     func initGoogleMap() {
@@ -57,7 +71,8 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
             let camera = GMSCameraPosition.camera(withLatitude: (location.coordinate.latitude), longitude: (location.coordinate.longitude), zoom: 15.0)
             self.mapView.animate(to: camera)
             self.locationManager.stopUpdatingLocation()
-            
+            self.myPosition.latitude = location.coordinate.latitude
+            self.myPosition.longitude = location.coordinate.longitude
             self.myLocation.append(location)
         }
 
@@ -106,9 +121,7 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
         let endtime:SPAddress = SPAddress()
         endtime.latitude = endLocation.coordinate.latitude
         endtime.longitude = endLocation.coordinate.longitude
-        
-        self.getDetailRouter(starTime: startTime, endTime: endtime)
-        
+
         let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving"
         //"https://maps.googleapis.com/maps/api/distancematrix/xml?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Vancouver+BC&mode=bicycling&language=fr-FR&key=YOUR_API_KEY"
         
@@ -137,10 +150,8 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
         }
     }
 // MARK:- get duration and distance
-    func getDetailRouter(starTime:SPAddress , endTime:SPAddress) -> (SPDistance, SPDuration){
-    
-        var duration:SPDuration = SPDuration()
-        var distance:SPDistance = SPDistance()
+    func getDetailRouter(starTime:SPAddress , endTime:SPAddress, complete: @escaping(SPDistance, SPDuration) -> Void ) {
+        
         
         let origin = "\(starTime.latitude),\(starTime.longitude)"
         let destination = "\(endTime.latitude),\(endTime.longitude)"
@@ -154,17 +165,20 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
             case .success(let value):
                 let newValue = value as? [String : AnyObject]
                 if let menuTabbar = Mapper<SPRow>().mapArray(JSONObject: newValue?["rows"]) {
-                    print("menuTabbar = \(menuTabbar.count)")
+                    if menuTabbar.count > 0 && menuTabbar[0].elements.count > 0 {
+                        complete(menuTabbar[0].elements[0].distance, menuTabbar[0].elements[0].duration)
+                    }
+                    
                 }
                 break
             case .failure(let error):
+                let errorCoordinte:SPBaseInformation = SPBaseInformation()
+                complete(errorCoordinte as! SPDistance, errorCoordinte as! SPDuration)
                 print("\(error)")
                 break
             }
         }
         
-        
-        return (distance, duration)
     }
     
 }
@@ -183,7 +197,7 @@ extension SPMapsViewController: GMSAutocompleteViewControllerDelegate ,GMSMapVie
         
         myLocation.append(location)
         if let block = blockCompleteUpdateAdress {
-                block(place)
+                block(place , self.myPosition)
         }
         
         self.dismiss(animated: true) {

@@ -9,6 +9,9 @@
 import UIKit
 
 class SPBaseParentViewController: UIViewController {
+    
+    var indicator:UIActivityIndicatorView =  UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -36,6 +39,15 @@ class SPBaseParentViewController: UIViewController {
         
         self.present(alert, animated: true, completion: nil)
         
+    }
+    
+    func showLoading() {
+        self.view.bringSubview(toFront: indicator)
+        self.indicator.startAnimating()
+    }
+    func stopLoading() {
+        self.view.sendSubview(toBack: indicator)
+        self.indicator.stopAnimating()
     }
     
     func showAlerComfirm(message:String,title:String, completed: @escaping(Bool) -> Void) {

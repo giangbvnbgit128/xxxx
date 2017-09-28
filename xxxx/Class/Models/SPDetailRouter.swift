@@ -9,10 +9,10 @@
 import Foundation
 import ObjectMapper
 
-class SPDistance: Mappable {
+class SPBaseInformation:Mappable {
     var Text:String = ""
     var Value:Int = 0
-
+    
     init() {
         
     }
@@ -22,26 +22,15 @@ class SPDistance: Mappable {
     func mapping(map: Map) {
         Text <- map["text"]
         Value <- map["value"]
-
+        
     }
+}
+
+class SPDistance: SPBaseInformation {
     
 }
-class SPDuration: Mappable {
-    var Text:String = ""
-    var Value:Int = 0
-    
-    init() {
-        
-    }
-    
-    required init?(map: Map) {
-        
-    }
-
-    func mapping(map: Map) {
-        Text <- map["text"]
-        Value <- map["value"]
-    }
+class SPDuration: SPBaseInformation {
+   
 }
 
 class SPElement: Mappable {

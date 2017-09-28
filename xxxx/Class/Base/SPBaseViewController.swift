@@ -10,7 +10,6 @@ import UIKit
 
 class SPBaseViewController: SPBaseParentViewController{
     class var identifier: String { return String.className(self) }
-    var indicator:UIActivityIndicatorView =  UIActivityIndicatorView()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(indicator)
@@ -38,14 +37,7 @@ class SPBaseViewController: SPBaseParentViewController{
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
-    func showLoading() {
-        self.view.bringSubview(toFront: indicator)
-        self.indicator.startAnimating()
-    }
-    func stopLoading() {
-        self.view.sendSubview(toBack: indicator)
-        self.indicator.stopAnimating()
-    }
+
     override func showAler(message:String,title:String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         

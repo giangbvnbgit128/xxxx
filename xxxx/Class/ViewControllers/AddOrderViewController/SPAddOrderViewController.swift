@@ -13,6 +13,7 @@ import DateTimePicker
 
 class SPAddOrderViewController: SPBaseParentViewController {
 
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var btncloseAlertView: UIButton!
     @IBOutlet weak var txtfName: UITextField!
     @IBOutlet weak var txtfTotalProduct: UITextField!
@@ -30,6 +31,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
     @IBOutlet weak var txtfLatitude: UITextField!
     @IBOutlet weak var txtfLongtitude: UITextField!
     
+    @IBOutlet weak var txtfShip: UITextField!
     @IBOutlet weak var selectProductView: UIView!
     
     @IBOutlet weak var txtfPhoneNumber: UITextField!
@@ -48,6 +50,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
     var arrayProduct:[SPProduct] = []
     @IBOutlet weak var btnMaxTimeShip: UIButton!
     var address:SPAddress = SPAddress()
+    var myLocation:SPAddress = SPAddress()
     var date:Date = Date()
     var formater:DateFormatter = DateFormatter()
     var dateforMinShip:Date = Date()
@@ -56,7 +59,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
     var indexForProduct:Int = Int()
     
     override func viewDidLoad() {
-  super.viewDidLoad()
+        super.viewDidLoad()
         
         pickerViewSelectProduct.dataSource = self
         pickerViewSelectProduct.delegate = self
@@ -92,6 +95,23 @@ class SPAddOrderViewController: SPBaseParentViewController {
             
         }
     }
+
+    @IBAction func caculaterShip(_ sender: Any) {
+        // show km time -> tien ship
+        // caanf tryenf vao time so de request.
+        
+        SPMapsViewController.ShareInstance.getDetailRouter(starTime: self.myLocation, endTime: self.address) { (distance, duration) in
+            var money:Float = 0
+            
+            money = Float(distance.Value)/1000 * 5000
+            
+             self.txtfShip.text = "Distance: \(distance.Text) Time: \(duration.Text) = \(money)$"
+        }
+        
+       
+        
+    }
+    
     @IBAction func clickMinTimeShip(_ sender: Any) {
         let picker = DateTimePicker.show(selected: date, minimumDate: nil, maximumDate: nil)
         picker.highlightColor = UIColor(red: 255.0/255.0, green: 138.0/255.0, blue: 138.0/255.0, alpha: 1)
@@ -193,12 +213,13 @@ class SPAddOrderViewController: SPBaseParentViewController {
     }
     @IBAction func clickSearchAdress(_ sender: Any) {
         let SPMapsVC = SPMapsViewController()
-        SPMapsVC.blockCompleteUpdateAdress = {(place) in
+        SPMapsVC.blockCompleteUpdateAdress = {(place, mylocation) in
             print("place in name = \(place.name)")// minh lay dc toan do ten vi tri.
             self.address.nameAddress = place.name
             self.address.distance = 0
             self.address.latitude = place.coordinate.latitude
             self.address.longitude = place.coordinate.longitude
+            self.myLocation = mylocation
             // thieu distance - time
         }
         SPTabbarViewController.ShareInstance.navigationController?.pushViewController(SPMapsVC, animated: true)

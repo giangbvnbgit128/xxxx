@@ -86,6 +86,10 @@
 		4B9127E51F614910004DF093 /* SPRecipentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9127E31F614910004DF093 /* SPRecipentTableViewCell.swift */; };
 		4B9127E61F614910004DF093 /* SPRecipentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B9127E41F614910004DF093 /* SPRecipentTableViewCell.xib */; };
 		534DA0371F62FF710033E5FE /* SPBaseParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534DA0361F62FF710033E5FE /* SPBaseParentViewController.swift */; };
+		537728731F7D7CF400229EFC /* SPTopViewAddOrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537728711F7D7CF400229EFC /* SPTopViewAddOrderTableViewCell.swift */; };
+		537728741F7D7CF400229EFC /* SPTopViewAddOrderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 537728721F7D7CF400229EFC /* SPTopViewAddOrderTableViewCell.xib */; };
+		537728771F7D81CD00229EFC /* SPAddressAddOrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537728751F7D81CD00229EFC /* SPAddressAddOrderTableViewCell.swift */; };
+		537728781F7D81CD00229EFC /* SPAddressAddOrderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 537728761F7D81CD00229EFC /* SPAddressAddOrderTableViewCell.xib */; };
 		538FC3B01F6E1BF600F7D5D5 /* SPAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538FC3AF1F6E1BF600F7D5D5 /* SPAddress.swift */; };
 		53AE2E671F65C6500079168D /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53AE2E661F65C6500079168D /* Photos.framework */; };
 		53C73EEC1F699BEE00B08EB5 /* SPAddOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C73EEA1F699BEE00B08EB5 /* SPAddOrderViewController.swift */; };
@@ -200,6 +204,10 @@
 		4B9127E31F614910004DF093 /* SPRecipentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPRecipentTableViewCell.swift; sourceTree = "<group>"; };
 		4B9127E41F614910004DF093 /* SPRecipentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPRecipentTableViewCell.xib; sourceTree = "<group>"; };
 		534DA0361F62FF710033E5FE /* SPBaseParentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPBaseParentViewController.swift; sourceTree = "<group>"; };
+		537728711F7D7CF400229EFC /* SPTopViewAddOrderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPTopViewAddOrderTableViewCell.swift; sourceTree = "<group>"; };
+		537728721F7D7CF400229EFC /* SPTopViewAddOrderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPTopViewAddOrderTableViewCell.xib; sourceTree = "<group>"; };
+		537728751F7D81CD00229EFC /* SPAddressAddOrderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPAddressAddOrderTableViewCell.swift; sourceTree = "<group>"; };
+		537728761F7D81CD00229EFC /* SPAddressAddOrderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPAddressAddOrderTableViewCell.xib; sourceTree = "<group>"; };
 		538FC3AF1F6E1BF600F7D5D5 /* SPAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPAddress.swift; sourceTree = "<group>"; };
 		53AE2E661F65C6500079168D /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		53C73EEA1F699BEE00B08EB5 /* SPAddOrderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPAddOrderViewController.swift; sourceTree = "<group>"; };
@@ -597,6 +605,10 @@
 		53C73EE91F699B6200B08EB5 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				537728711F7D7CF400229EFC /* SPTopViewAddOrderTableViewCell.swift */,
+				537728721F7D7CF400229EFC /* SPTopViewAddOrderTableViewCell.xib */,
+				537728751F7D81CD00229EFC /* SPAddressAddOrderTableViewCell.swift */,
+				537728761F7D81CD00229EFC /* SPAddressAddOrderTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -736,11 +748,13 @@
 			files = (
 				4B9127C31F61338D004DF093 /* SPProfileTableViewCell.xib in Resources */,
 				4B9127C71F6134DB004DF093 /* SPInforTableViewCell.xib in Resources */,
+				537728741F7D7CF400229EFC /* SPTopViewAddOrderTableViewCell.xib in Resources */,
 				53C73EED1F699BEE00B08EB5 /* SPAddOrderViewController.xib in Resources */,
 				4B9127A51F610259004DF093 /* SPTabbarViewController.xib in Resources */,
 				4B33C8F61F62418900A340EA /* SPMapsViewController.xib in Resources */,
 				4B3FB18B1F60E78000B335FB /* LaunchScreen.storyboard in Resources */,
 				4B33C9011F627E6A00A340EA /* SPManagerProductViewController.xib in Resources */,
+				537728781F7D81CD00229EFC /* SPAddressAddOrderTableViewCell.xib in Resources */,
 				4B9127AD1F61060D004DF093 /* SPFrequenterViewController.xib in Resources */,
 				4B9127CB1F61352E004DF093 /* SPItemLeftMenuTableViewCell.xib in Resources */,
 				4B3FB1881F60E78000B335FB /* Assets.xcassets in Resources */,
@@ -863,6 +877,7 @@
 				4B9127A81F6105CC004DF093 /* SPBillViewController.swift in Sources */,
 				4B37F7F21F60F533006F5EC3 /* CAPSPageMenuConfiguration.swift in Sources */,
 				4B33C9001F627E6A00A340EA /* SPManagerProductViewController.swift in Sources */,
+				537728731F7D7CF400229EFC /* SPTopViewAddOrderTableViewCell.swift in Sources */,
 				4B9127E51F614910004DF093 /* SPRecipentTableViewCell.swift in Sources */,
 				4B33C8F51F62418900A340EA /* SPMapsViewController.swift in Sources */,
 				4B37F8501F60FFD2006F5EC3 /* SPLeftMeuViewController.swift in Sources */,
@@ -892,6 +907,7 @@
 				4B33C90B1F62918400A340EA /* SPAddProductViewController.swift in Sources */,
 				4B37F7CB1F60F1DB006F5EC3 /* UILabel.swift in Sources */,
 				4B37F8491F60FF87006F5EC3 /* SPOrderViewController.swift in Sources */,
+				537728771F7D81CD00229EFC /* SPAddressAddOrderTableViewCell.swift in Sources */,
 				4B37F7BA1F60F1DB006F5EC3 /* Double.swift in Sources */,
 				4B37F7C21F60F1DB006F5EC3 /* NSUserDefaults.swift in Sources */,
 				4B37F7CC1F60F1DB006F5EC3 /* UINavigationBar.swift in Sources */,
