@@ -12,8 +12,12 @@ import RealmSwift
 import DateTimePicker
 
 class SPAddOrderViewController: SPBaseParentViewController {
-
-    @IBOutlet weak var tableView: UITableView!
+    
+    let heightForAlerViewCoordinate:CGFloat = 186
+    var heightForAlerViewCoordinateDefault:CGFloat = 130
+    
+    @IBOutlet weak var nscontraintHeightForAlerViewAddress: NSLayoutConstraint!
+    @IBOutlet weak var viewCoordinate: UIView!
     @IBOutlet weak var btncloseAlertView: UIButton!
     @IBOutlet weak var txtfName: UITextField!
     @IBOutlet weak var txtfTotalProduct: UITextField!
@@ -69,11 +73,14 @@ class SPAddOrderViewController: SPBaseParentViewController {
         self.setRightBarIconParent()
         self.hiddenAlert()
         self.hiddenSelectProduct()
+        self.hiddenViewCoordinateinPopupView()
         self.loadProduct()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        self.hiddenViewCoordinateinPopupView()
+        self.hiddenAlert();
         
     }
     
@@ -143,6 +150,11 @@ class SPAddOrderViewController: SPBaseParentViewController {
     @IBAction func clickSelectProduct(_ sender: Any) {
         self.showSelectProduct()
     }
+    
+// MARK: - click Save Coordinate
+    
+    @IBAction func clickSaveCoordinate(_ sender: Any) {
+    }
 // MARK: - clickSave order
     
     @IBAction func clickOk(_ sender: Any) {
@@ -211,25 +223,37 @@ class SPAddOrderViewController: SPBaseParentViewController {
         self.txtvRs.text = ""
         
     }
-    @IBAction func clickSearchAdress(_ sender: Any) {
+// MARK: - Search Click address
+    @IBAction func clickSearchAddress(_ sender: Any) {
+        
+        self.showAlertCoordinate()
+
+    }
+
+    @IBAction func clickSearchAddressWithMaps(_ sender: Any) {
         let SPMapsVC = SPMapsViewController()
-        SPMapsVC.blockCompleteUpdateAdress = {(place, mylocation) in
+            SPMapsVC.blockCompleteUpdateAdress = {(place, mylocation) in
             print("place in name = \(place.name)")// minh lay dc toan do ten vi tri.
             self.address.nameAddress = place.name
             self.address.distance = 0
             self.address.latitude = place.coordinate.latitude
             self.address.longitude = place.coordinate.longitude
             self.myLocation = mylocation
-            // thieu distance - time
-        }
-        SPTabbarViewController.ShareInstance.navigationController?.pushViewController(SPMapsVC, animated: true)
-        
+            }
+            SPTabbarViewController.ShareInstance.navigationController?.pushViewController(SPMapsVC, animated: true)
     }
-    @IBAction func clickOkAler(_ sender: Any) {
-   
+    @IBAction func addAddressWithCoordinate(_ sender: Any) {
+        self.viewCoordinate.isHidden = false
+        UIView.animate(withDuration: 0.3, animations: {
+        self.nscontraintHeightForAlerViewAddress.constant = self.heightForAlerViewCoordinate
+          self.viewCoordinate.alpha = 1
+        }) { (complete) in
+            //
+        }
     }
 
     @IBAction func clickCloseSelectProduct(_ sender: Any) {
+        
         self.dismissSelectProduct()
     }
 //Mark: - Ok and Canecl Select product
@@ -259,6 +283,7 @@ extension SPAddOrderViewController {
         }) { (complete) in
             if complete {
                 self.hiddenAlert()
+                self.hiddenViewCoordinateinPopupView()
             }
         }
     }
@@ -288,6 +313,11 @@ extension SPAddOrderViewController {
         }
         
         
+    }
+    func hiddenViewCoordinateinPopupView() {
+        self.viewCoordinate.alpha = 0
+        self.nscontraintHeightForAlerViewAddress.constant = self.heightForAlerViewCoordinateDefault
+        self.viewCoordinate.isHidden = true
     }
     
     func loadProduct() {
