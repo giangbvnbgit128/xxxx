@@ -13,11 +13,15 @@ import DateTimePicker
 
 class SPAddOrderViewController: SPBaseParentViewController {
     
-    let heightForAlerViewCoordinate:CGFloat = 186
-    var heightForAlerViewCoordinateDefault:CGFloat = 130
+    let heightForAlerViewCoordinate:CGFloat = 118
+    var heightForAlerViewCoordinateDefault:CGFloat = 30
     
+    @IBOutlet weak var totalMoenyShip: UILabel!
+    @IBOutlet weak var distanceView: UIView!
+    @IBOutlet weak var txtPriceShipKm: UITextField!
     @IBOutlet weak var nscontraintHeightForAlerViewAddress: NSLayoutConstraint!
     @IBOutlet weak var viewCoordinate: UIView!
+    @IBOutlet weak var shipCaculateView: UIView!
     @IBOutlet weak var btncloseAlertView: UIButton!
     @IBOutlet weak var txtfName: UITextField!
     @IBOutlet weak var txtfTotalProduct: UITextField!
@@ -26,7 +30,6 @@ class SPAddOrderViewController: SPBaseParentViewController {
     @IBOutlet weak var lblTotalProduct: UILabel!
     @IBOutlet weak var txtvRs: UITextView!
     
-    @IBOutlet weak var txtvResult: UITextView!
     
     @IBOutlet weak var btnSearchAdress: UIButton!
     
@@ -35,7 +38,6 @@ class SPAddOrderViewController: SPBaseParentViewController {
     @IBOutlet weak var txtfLatitude: UITextField!
     @IBOutlet weak var txtfLongtitude: UITextField!
     
-    @IBOutlet weak var txtfShip: UITextField!
     @IBOutlet weak var selectProductView: UIView!
     
     @IBOutlet weak var txtfPhoneNumber: UITextField!
@@ -75,12 +77,38 @@ class SPAddOrderViewController: SPBaseParentViewController {
         self.hiddenSelectProduct()
         self.hiddenViewCoordinateinPopupView()
         self.loadProduct()
+        self.txtPriceShipKm.text = "5000"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.hiddenViewCoordinateinPopupView()
         self.hiddenAlert();
+        if  self.address.nameAddress != "" {
+            self.showAlerComfirm(message: "Bạn có muốn tính giá ship không ?", title: "Thông báo") { (compelete) in
+                if compelete {
+                    SPMapsViewController.ShareInstance.getDetailRouter(starTime: self.myLocation, endTime: self.address) { (distance, duration) in
+                        var money:Float = 0
+                        let priceFoOneKm = self.txtPriceShipKm.text
+                        if let priceShip = Float(priceFoOneKm ?? "5000") {
+                            money = Float(distance.Value)/1000 * priceShip
+                            self.lblDistance.text = "\(distance.Text)"
+                            self.lblTotalTimeDistance.text = "\(duration.Text)"
+                            self.totalMoenyShip.text = "\(money)"
+                        }
+
+                    }
+                    self.showShip()
+                }
+            }
+        } else {
+            self.nscontraintHeightForAlerViewAddress.constant = self.heightForAlerViewCoordinateDefault
+            self.shipCaculateView.isHidden = true
+            self.distanceView.isHidden = true
+        }
+
+
+        // func check xem dia chi da co hay chua. neu chua thi khong lam j . neu co thi show alert co muon tinh ship hay khong
         
     }
     
@@ -101,22 +129,6 @@ class SPAddOrderViewController: SPBaseParentViewController {
             }
             
         }
-    }
-
-    @IBAction func caculaterShip(_ sender: Any) {
-        // show km time -> tien ship
-        // caanf tryenf vao time so de request.
-        
-        SPMapsViewController.ShareInstance.getDetailRouter(starTime: self.myLocation, endTime: self.address) { (distance, duration) in
-            var money:Float = 0
-            
-            money = Float(distance.Value)/1000 * 5000
-            
-             self.txtfShip.text = "Distance: \(distance.Text) Time: \(duration.Text) = \(money)$"
-        }
-        
-       
-        
     }
     
     @IBAction func clickMinTimeShip(_ sender: Any) {
@@ -150,7 +162,30 @@ class SPAddOrderViewController: SPBaseParentViewController {
     @IBAction func clickSelectProduct(_ sender: Any) {
         self.showSelectProduct()
     }
+// show ship
     
+    func showShip() {
+        
+        UIView.animate(withDuration: 0.2, animations: { 
+           self.nscontraintHeightForAlerViewAddress.constant = self.heightForAlerViewCoordinate
+            self.distanceView.isHidden = false
+            self.shipCaculateView.isHidden = false
+        }) { (complete) in
+            
+        }
+
+    }
+    
+    func dimissShip() {
+    UIView.animate(withDuration: 0.2, animations: { 
+        self.nscontraintHeightForAlerViewAddress.constant = self.heightForAlerViewCoordinateDefault
+        }) { (complete) in
+            self.shipCaculateView.isHidden = true
+            self.distanceView.isHidden = true
+        }
+
+    }
+
 // MARK: - click Save Coordinate
     
     @IBAction func clickSaveCoordinate(_ sender: Any) {
@@ -218,9 +253,9 @@ class SPAddOrderViewController: SPBaseParentViewController {
         self.btnMinTimeShip.setTitle("Sớm nhất", for: .normal)
         self.btnMaxTimeShip.setTitle("Muộn nhất", for: .normal)
         self.btnSearchAdress.setTitle("Tìm Địa chỉ", for: .normal)
-        self.lblDistance.text = ""
+        self.lblDistance.text = "--"
         self.lblTotalTimeDistance.text = "--"
-        self.txtvRs.text = ""
+        self.dimissShip()
         
     }
 // MARK: - Search Click address
@@ -233,8 +268,8 @@ class SPAddOrderViewController: SPBaseParentViewController {
     @IBAction func clickSearchAddressWithMaps(_ sender: Any) {
         let SPMapsVC = SPMapsViewController()
             SPMapsVC.blockCompleteUpdateAdress = {(place, mylocation) in
-            print("place in name = \(place.name)")// minh lay dc toan do ten vi tri.
-            self.address.nameAddress = place.name
+            self.btnSearchAdress.setTitle("\(place.name)", for: .normal)
+            self.address.nameAddress = place.name 
             self.address.distance = 0
             self.address.latitude = place.coordinate.latitude
             self.address.longitude = place.coordinate.longitude
