@@ -26,6 +26,6 @@ class SPOrderModel: SPBaseModelRealm {
      dynamic var nameAddress:String = ""
      dynamic var latitude:Double = 0.0
      dynamic var longitude:Double = 0.0
-     dynamic var distance:Float = Float()
-     dynamic var time:Float = Float()
+     dynamic var distance:String = "0"
+     dynamic var time:String = "0"
 }

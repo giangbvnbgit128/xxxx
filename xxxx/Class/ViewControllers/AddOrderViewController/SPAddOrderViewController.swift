@@ -106,14 +106,12 @@ class SPAddOrderViewController: SPBaseParentViewController {
         super.viewWillAppear(true)
         self.hiddenViewCoordinateinPopupView()
         self.hiddenAlert();
-        if  self.address.nameAddress != "" {
-            
-            // check flag detail
-            
-            if self.isShowDetail {
-                self.showDetailOrder()
-            } else {
-                
+        // check flag detail
+        
+        if self.isShowDetail {
+            self.showDetailOrder()
+        } else {
+            if  self.address.nameAddress != "" {
                 self.showAlerComfirm(message: "Bạn có muốn tính giá ship không ?", title: "Thông báo") { (compelete) in
                     if compelete {
                         SPMapsViewController.ShareInstance.getDetailRouter(starTime: self.myLocation, endTime: self.address) { (distance, duration) in
@@ -132,14 +130,12 @@ class SPAddOrderViewController: SPBaseParentViewController {
                     }
                 }
             
-            }
-
-        } else {
-            self.nscontraintHeightForAlerViewAddress.constant = self.heightForAlerViewShipeDefault
-            self.shipCaculateView.isHidden = true
-            self.distanceView.isHidden = true
+            } else {
+                self.nscontraintHeightForAlerViewAddress.constant = self.heightForAlerViewShipeDefault
+                self.shipCaculateView.isHidden = true
+                self.distanceView.isHidden = true
         }
-
+    }
 
         // func check xem dia chi da co hay chua. neu chua thi khong lam j . neu co thi show alert co muon tinh ship hay khong
         
@@ -242,8 +238,20 @@ class SPAddOrderViewController: SPBaseParentViewController {
             order.nameProduct = product
         }
         
+        if let distance:String = self.lblDistance.text {
+            order.distance = "\(distance)"
+        }
+        
+        if let distanceTime:String = self.lblTotalTimeDistance.text {
+            order.time = "\(distanceTime)"
+        }
+        
         if let totalProduct:Int =  Int(self.txtfTotalProduct.text ?? "0")  {
             order.totalProduct = totalProduct
+        }
+        
+        if let priceForShip:Int =  Int(self.txtPriceShipKm.text ?? "0")  {
+            order.priceShip = priceForShip
         }
         
         order.minTimeShip = self.dateforMinShip
@@ -256,9 +264,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
     
     func saveData(address:SPAddress, order: SPOrderModel) {
         
-        order.distance = address.distance
         order.nameAddress = address.nameAddress
-        order.time = address.time
         order.latitude = address.latitude
         order.longitude = address.longitude
         let realm = try! Realm()
