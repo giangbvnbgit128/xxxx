@@ -13,8 +13,12 @@ import DateTimePicker
 
 class SPAddOrderViewController: SPBaseParentViewController {
     
-    let heightForAlerViewCoordinate:CGFloat = 118
-    var heightForAlerViewCoordinateDefault:CGFloat = 30
+    let heightForAlerViewShip:CGFloat = 118
+    var heightForAlerViewShipeDefault:CGFloat = 30
+    
+    let heightForAlerViewCoordinate:CGFloat = 150
+    var heightForAlerViewCoordinateDefault:CGFloat = 200
+
     
     @IBOutlet weak var totalMoenyShip: UILabel!
     @IBOutlet weak var distanceView: UIView!
@@ -26,9 +30,9 @@ class SPAddOrderViewController: SPBaseParentViewController {
     @IBOutlet weak var txtfName: UITextField!
     @IBOutlet weak var txtfTotalProduct: UITextField!
     @IBOutlet weak var lblDistance: UILabel!
-    @IBOutlet weak var btnProduct: UIButton!
+    
     @IBOutlet weak var lblTotalProduct: UILabel!
-    @IBOutlet weak var txtvRs: UITextView!
+    @IBOutlet weak var lblRS: UILabel!
     
     
     @IBOutlet weak var btnSearchAdress: UIButton!
@@ -37,6 +41,13 @@ class SPAddOrderViewController: SPBaseParentViewController {
     @IBOutlet weak var viewAlertChild: UIView!
     @IBOutlet weak var txtfLatitude: UITextField!
     @IBOutlet weak var txtfLongtitude: UITextField!
+    
+    @IBOutlet weak var nscontraintHeightViewAler: NSLayoutConstraint!
+    
+    @IBOutlet weak var txtcoordinateLongtitude: UITextField!
+    
+    @IBOutlet weak var txtcoordinatelatitude: UITextField!
+    @IBOutlet weak var txtcoordinateName: UITextField!
     
     @IBOutlet weak var selectProductView: UIView!
     
@@ -47,14 +58,14 @@ class SPAddOrderViewController: SPBaseParentViewController {
     
     @IBOutlet weak var pickerViewSelectProduct: UIPickerView!
     
+    @IBOutlet weak var btnMinTimeShip: UILabel!
     @IBOutlet weak var lblTotalTimeDistance: UILabel!
     var oldFrameAlert:CGRect = CGRect()
     var newFrameAlert:CGRect = CGRect()
-    @IBOutlet weak var btnMinTimeShip: UIButton!
     var odlFrameForSelectProduct:CGRect = CGRect()
-    
-    var arrayProduct:[SPProduct] = []
-    @IBOutlet weak var btnMaxTimeShip: UIButton!
+   
+    @IBOutlet weak var lblproductName: UILabel!
+    @IBOutlet weak var btnMaxTimeShip: UILabel!
     var address:SPAddress = SPAddress()
     var myLocation:SPAddress = SPAddress()
     var date:Date = Date()
@@ -62,7 +73,14 @@ class SPAddOrderViewController: SPBaseParentViewController {
     var dateforMinShip:Date = Date()
     var dateforMaxShip:Date = Date()
     var product:SPProduct = SPProduct()
+    var arrayProduct:[SPProduct] = []
     var indexForProduct:Int = Int()
+    
+    // order for detail update end delete
+    
+    var orderDetail:SPOrderModel = SPOrderModel()
+    
+    var isShowDetail:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,6 +96,10 @@ class SPAddOrderViewController: SPBaseParentViewController {
         self.hiddenViewCoordinateinPopupView()
         self.loadProduct()
         self.txtPriceShipKm.text = "5000"
+        
+        
+        txtfTotalProduct.addTarget(self, action: #selector(SPAddOrderViewController.changeValueText), for: .editingChanged)
+        txtPriceShipKm.addTarget(self, action: #selector(SPAddOrderViewController.changeValueForShip), for: .editingChanged)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,24 +107,35 @@ class SPAddOrderViewController: SPBaseParentViewController {
         self.hiddenViewCoordinateinPopupView()
         self.hiddenAlert();
         if  self.address.nameAddress != "" {
-            self.showAlerComfirm(message: "Bạn có muốn tính giá ship không ?", title: "Thông báo") { (compelete) in
-                if compelete {
-                    SPMapsViewController.ShareInstance.getDetailRouter(starTime: self.myLocation, endTime: self.address) { (distance, duration) in
-                        var money:Float = 0
-                        let priceFoOneKm = self.txtPriceShipKm.text
-                        if let priceShip = Float(priceFoOneKm ?? "5000") {
-                            money = Float(distance.Value)/1000 * priceShip
-                            self.lblDistance.text = "\(distance.Text)"
-                            self.lblTotalTimeDistance.text = "\(duration.Text)"
-                            self.totalMoenyShip.text = "\(money)"
+            
+            // check flag detail
+            
+            if self.isShowDetail {
+                self.showDetailOrder()
+            } else {
+                
+                self.showAlerComfirm(message: "Bạn có muốn tính giá ship không ?", title: "Thông báo") { (compelete) in
+                    if compelete {
+                        SPMapsViewController.ShareInstance.getDetailRouter(starTime: self.myLocation, endTime: self.address) { (distance, duration) in
+                            var money:Float = 0
+                            let priceFoOneKm = self.txtPriceShipKm.text
+                            if let priceShip = Float(priceFoOneKm ?? "5000") {
+                                money = Float(distance.Value)/1000 * priceShip
+                                self.lblDistance.text = "\(distance.Text)"
+                                self.lblTotalTimeDistance.text = "\(duration.Text)"
+                                self.totalMoenyShip.text = "\(money)"
+                                self.changeValueText()
+                            }
+                            
                         }
-
+                        self.showShip()
                     }
-                    self.showShip()
                 }
+            
             }
+
         } else {
-            self.nscontraintHeightForAlerViewAddress.constant = self.heightForAlerViewCoordinateDefault
+            self.nscontraintHeightForAlerViewAddress.constant = self.heightForAlerViewShipeDefault
             self.shipCaculateView.isHidden = true
             self.distanceView.isHidden = true
         }
@@ -124,13 +157,16 @@ class SPAddOrderViewController: SPBaseParentViewController {
                 self.formater.dateFormat = DATA.DATEFORMAT
                 self.dateforMaxShip = date
                 let result:String = self.formater.string(from: date)
-                self.btnMaxTimeShip.setTitle(result, for: .normal)
+                self.btnMaxTimeShip.text = result
                 
             }
             
         }
     }
     
+    @IBAction func clickOkSaveCoordinate(_ sender: Any) {
+        
+    }
     @IBAction func clickMinTimeShip(_ sender: Any) {
         let picker = DateTimePicker.show(selected: date, minimumDate: nil, maximumDate: nil)
         picker.highlightColor = UIColor(red: 255.0/255.0, green: 138.0/255.0, blue: 138.0/255.0, alpha: 1)
@@ -142,7 +178,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
                 self.formater.dateFormat = DATA.DATEFORMAT
                 self.dateforMinShip = date
                 let result:String = self.formater.string(from: date)
-                self.btnMinTimeShip.setTitle(result, for: .normal)
+                self.btnMinTimeShip.text = result
                 
             }
             
@@ -167,7 +203,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
     func showShip() {
         
         UIView.animate(withDuration: 0.2, animations: { 
-           self.nscontraintHeightForAlerViewAddress.constant = self.heightForAlerViewCoordinate
+           self.nscontraintHeightForAlerViewAddress.constant = self.heightForAlerViewShip
             self.distanceView.isHidden = false
             self.shipCaculateView.isHidden = false
         }) { (complete) in
@@ -178,7 +214,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
     
     func dimissShip() {
     UIView.animate(withDuration: 0.2, animations: { 
-        self.nscontraintHeightForAlerViewAddress.constant = self.heightForAlerViewCoordinateDefault
+        self.nscontraintHeightForAlerViewAddress.constant = self.heightForAlerViewShipeDefault
         }) { (complete) in
             self.shipCaculateView.isHidden = true
             self.distanceView.isHidden = true
@@ -202,16 +238,14 @@ class SPAddOrderViewController: SPBaseParentViewController {
         if let phoneNumber = self.txtfPhoneNumber.text {
             order.phoneNumber = phoneNumber
         }
-        if let product:SPProduct = self.arrayProduct[self.indexForProduct] {
-            order.idProduct = product.id
+        if let product:String = self.lblproductName.text {
+            order.nameProduct = product
         }
         
         if let totalProduct:Int =  Int(self.txtfTotalProduct.text ?? "0")  {
             order.totalProduct = totalProduct
         }
-        // save adress . - > lay id luong
-        self.address.id = self.address.incrementID(modelName: SPAddress.self)
-        order.idAddress = self.address.id
+        
         order.minTimeShip = self.dateforMinShip
         order.maxTimeShip = self.dateforMaxShip
         
@@ -222,9 +256,13 @@ class SPAddOrderViewController: SPBaseParentViewController {
     
     func saveData(address:SPAddress, order: SPOrderModel) {
         
+        order.distance = address.distance
+        order.nameAddress = address.nameAddress
+        order.time = address.time
+        order.latitude = address.latitude
+        order.longitude = address.longitude
         let realm = try! Realm()
         try! realm.write {
-            realm.add(address)
             realm.add(order)
         }
         
@@ -249,9 +287,9 @@ class SPAddOrderViewController: SPBaseParentViewController {
         self.txtfLatitude.text = ""
         self.txtfLongtitude.text = ""
         self.txtfTotalProduct.text = "0"
-        self.btnProduct.setTitle("Chọn sản phẩm", for: .normal)
-        self.btnMinTimeShip.setTitle("Sớm nhất", for: .normal)
-        self.btnMaxTimeShip.setTitle("Muộn nhất", for: .normal)
+        self.lblproductName.text = "Chọn sản phẩm"
+        self.btnMinTimeShip.text = "Sớm nhất"
+        self.btnMaxTimeShip.text = "Muộn nhất"
         self.btnSearchAdress.setTitle("Tìm Địa chỉ", for: .normal)
         self.lblDistance.text = "--"
         self.lblTotalTimeDistance.text = "--"
@@ -280,7 +318,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
     @IBAction func addAddressWithCoordinate(_ sender: Any) {
         self.viewCoordinate.isHidden = false
         UIView.animate(withDuration: 0.3, animations: {
-        self.nscontraintHeightForAlerViewAddress.constant = self.heightForAlerViewCoordinate
+        self.nscontraintHeightForAlerViewAddress.constant = 200
           self.viewCoordinate.alpha = 1
         }) { (complete) in
             //
@@ -291,16 +329,17 @@ class SPAddOrderViewController: SPBaseParentViewController {
         
         self.dismissSelectProduct()
     }
-//Mark: - Ok and Canecl Select product
+//MARK: - Ok and Canecl Select product
     @IBAction func clickCancelProduct(_ sender: Any) {
         self.dismissSelectProduct()
     }
     @IBAction func clickOkProduct(_ sender: Any) {
         if let product:SPProduct = arrayProduct[self.indexForProduct] {
-            self.btnProduct.setTitle(product.name, for: .normal)
+            self.lblproductName.text = product.name
             self.txtfTotalProduct.text = "\(product.totalProduct - product.inventory)"
             self.txtfTotalProduct.becomeFirstResponder()
             self.product = product
+            self.changeValueText()
         }
         self.dismissSelectProduct()
 
@@ -325,6 +364,7 @@ extension SPAddOrderViewController {
     
     func showAlertCoordinate()  {
         self.viewAler.isHidden = false
+        self.nscontraintHeightViewAler.constant = 120
         UIView.animate(withDuration: 0.5, animations: {
             self.viewAlertChild.frame.origin.x = (UIScreen.main.bounds.width - (self.viewAlertChild.frame.width))/2
         }) { (complete) in
@@ -334,7 +374,7 @@ extension SPAddOrderViewController {
         }
     }
     
-// Mark: - dismiss alertview
+// MARK: - dismiss alertview
     
     func hiddenAlert() {
         
@@ -351,7 +391,7 @@ extension SPAddOrderViewController {
     }
     func hiddenViewCoordinateinPopupView() {
         self.viewCoordinate.alpha = 0
-        self.nscontraintHeightForAlerViewAddress.constant = self.heightForAlerViewCoordinateDefault
+        self.nscontraintHeightViewAler.constant  = self.heightForAlerViewCoordinateDefault
         self.viewCoordinate.isHidden = true
     }
     
@@ -418,7 +458,62 @@ extension SPAddOrderViewController: UIPickerViewDataSource , UIPickerViewDelegat
         self.indexForProduct = row
 
     }
+// MARK: - chagne value text price in km
+    func changeValueForShip() {
+        guard let distance = Float((self.lblDistance.text ?? "0").replacingOccurrences(of: "km", with: "").trimmingCharacters(in: .whitespaces)) else {
+           return
+        }
+        
+        guard let priceForShip = Float (self.txtPriceShipKm.text ?? "") else {
+            return
+        }
+        
+        self.totalMoenyShip.text = "\(distance * priceForShip)"
+        self.changeValueText()
+        
+    }
+    
+// MARK: - change vlaue text in sl
+    func changeValueText() {
+        
+        var kq = ""
+        
+        guard let sl = Float(self.txtfTotalProduct.text ?? "0") else {
+            return
+        }
+        
+        guard let moneyShip = Float(self.totalMoenyShip.text ?? "0") else {
+            return
+        }
+        
+        let moneyGoods:Float = Float(Int(sl)*self.product.price)
+        
+       kq = "\(moneyGoods) hang + " + " \(moneyShip) ship = \(moneyGoods + moneyShip) vnd"
+        self.lblRS.text = kq
+        
+    }
+    
+// MARK: - show detail order
+    
+    func showDetailOrder() {
+        self.txtfName.text = self.orderDetail.nameGuest
+        self.txtfPhoneNumber.text = self.orderDetail.phoneNumber
+        self.lblproductName.text = self.orderDetail.nameProduct
+        self.txtfTotalProduct.text = "\(self.orderDetail.soldProduct)"
+        self.btnMinTimeShip.text = "\(self.orderDetail.minTimeShip)"
+        self.btnMaxTimeShip.text = "\(self.orderDetail.maxTimeShip)"
+        self.btnSearchAdress.setTitle("\(self.orderDetail.nameAddress)", for: .normal)
+        self.lblDistance.text = "\(self.orderDetail.distance) km"
+        self.lblTotalTimeDistance.text = "\(self.orderDetail.time)"
+        self.txtPriceShipKm.text = "\(self.orderDetail.priceShip)"
+        self.changeValueForShip()
+        
+        if orderDetail.priceShip != 0 {
+            self.showShip()
+        } else {
+            self.dimissShip()
+        }
+    }
     
 }
-
 

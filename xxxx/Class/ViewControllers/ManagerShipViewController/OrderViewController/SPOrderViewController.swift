@@ -18,7 +18,6 @@ class SPOrderViewController: SPBaseViewController {
     
     var arrayOrder:[SPOrderModel] = []
     var arrayProduct:[SPProduct] = []
-    var arrayAddress:[SPAddress] = []
     
     struct Static {
         static var instance: SPOrderViewController?
@@ -56,11 +55,8 @@ class SPOrderViewController: SPBaseViewController {
         if tableView != nil {
             let realm = try! Realm()
             let oders = realm.objects(SPOrderModel.self)
-            let address = realm.objects(SPAddress.self)
             let products = realm.objects(SPProduct.self)
-            
             self.arrayOrder = Array(oders).reversed()
-            self.arrayAddress = Array(address)
             self.arrayProduct = Array(products)
             
             tableView.reloadData()
@@ -90,26 +86,22 @@ extension SPOrderViewController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeue(SPRecipentTableViewCell.self)
-        var product = SPProduct()
-        var address = SPAddress()
         let order = arrayOrder[indexPath.row]
-        for item in self.arrayProduct {
-            if item.id == order.idProduct {
-                product = item
-            }
-        }
-        for item in self.arrayAddress {
-            if item.id == order.idAddress {
-                address = item
-            }
-        }
-        
-        cell.configCell(index: indexPath.row,product: product,order: order, address: address)
+        cell.configCell(index: indexPath.row, order: order)
         return cell
     }
 }
 extension SPOrderViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.heightForCell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // truyen sang ben kia 1 orderItem
+        
+        let viewVC = SPAddOrderViewController()
+        viewVC.isShowDetail = true
+        viewVC.orderDetail = arrayOrder[indexPath.row]
+        SPTabbarViewController.ShareInstance.navigationController?.pushViewController(viewVC, animated: true)
     }
 }

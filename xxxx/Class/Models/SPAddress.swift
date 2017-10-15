@@ -7,13 +7,12 @@
 //
 
 import Foundation
-import RealmSwift
 
-class SPAddress: SPBaseModelRealm{
-    dynamic var nameAddress:String = ""
-    dynamic var latitude:Double = 0.0
-    dynamic var longitude:Double = 0.0
-    dynamic var distance:Float = Float()
-    dynamic var time:Float = Float()
+class SPAddress: NSObject {
+    var nameAddress:String = ""
+    var latitude:Double = 0.0
+    var longitude:Double = 0.0
+    var distance:Float = Float()
+    var time:Float = Float()
 
 }

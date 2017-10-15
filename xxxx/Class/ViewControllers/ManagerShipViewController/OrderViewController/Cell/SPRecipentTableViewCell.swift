@@ -36,11 +36,11 @@ class SPRecipentTableViewCell: UITableViewCell {
     }
     @IBAction func clickCall(_ sender: Any) {
     }
-    func configCell(index:Int, product:SPProduct, order:SPOrderModel,address: SPAddress) {
+    func configCell(index:Int,order:SPOrderModel) {
         self.lableNumberOfItem.text = "\(index)"
         self.lblName.text = order.nameGuest
         self.lblProduct.text = order.phoneNumber
-        self.lblProduct.text = product.name
-        self.lblAddress.text = address.nameAddress
+        self.lblProduct.text = order.nameProduct
+        self.lblAddress.text = order.nameAddress
     }
 }

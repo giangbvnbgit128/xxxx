@@ -188,11 +188,11 @@ extension SPMapsViewController: GMSAutocompleteViewControllerDelegate ,GMSMapVie
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         let camera = GMSCameraPosition.camera(withLatitude: place.coordinate.latitude, longitude: place.coordinate.longitude, zoom: 15.0)
         self.mapView.camera = camera
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
-        marker.title = "Sydney"
-        marker.snippet = "Australia"
-        marker.map = mapView
+//        let marker = GMSMarker()
+//        marker.position = CLLocationCoordinate2D(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
+//        marker.title = "Sydney"
+//        marker.snippet = "Australia"
+//        marker.map = mapView
         let location:CLLocation = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
         
         myLocation.append(location)

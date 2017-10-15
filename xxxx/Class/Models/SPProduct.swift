@@ -12,6 +12,7 @@ import Realm
 class SPCategoryProduct: SPBaseModelRealm {
    dynamic var inventory:Int = 0
    dynamic var totalProduct:Int = 0
+   dynamic var soldProduct:Int = 0
    dynamic var name:String = ""
    dynamic var imageUrl:String = ""
    dynamic var price:Int = 0
