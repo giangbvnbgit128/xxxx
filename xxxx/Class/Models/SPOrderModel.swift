@@ -10,17 +10,14 @@ import RealmSwift
 import Realm
 
 
-class SPOrderModel: SPBaseModelRealm {
+class SPOrderModel: SPBaseModel {
      dynamic var nameGuest:String = ""
      dynamic var phoneNumber:String = ""
-     dynamic var nameProduct:String = ""
-     dynamic var soldProduct:Int = 0
      dynamic var priceShip:Int = 0
      dynamic var des:String = ""
      dynamic var paid:Bool = false
      dynamic var categoryId:Int = -1
      dynamic var categoryName:String = ""
-     dynamic var totalProduct:Int = 0
      dynamic var minTimeShip:Date = Date()
      dynamic var maxTimeShip:Date = Date()
      dynamic var nameAddress:String = ""

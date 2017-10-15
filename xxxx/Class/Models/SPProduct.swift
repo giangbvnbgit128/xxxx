@@ -9,7 +9,7 @@
 import RealmSwift
 import Realm
 
-class SPCategoryProduct: SPBaseModelRealm {
+class SPBaseModel: SPBaseModelRealm {
    dynamic var inventory:Int = 0
    dynamic var totalProduct:Int = 0
    dynamic var soldProduct:Int = 0
@@ -25,7 +25,7 @@ class SPCategoryProduct: SPBaseModelRealm {
 }
 
 
-class SPProduct: SPCategoryProduct {
+class SPProduct: SPBaseModel {
 
 
 }

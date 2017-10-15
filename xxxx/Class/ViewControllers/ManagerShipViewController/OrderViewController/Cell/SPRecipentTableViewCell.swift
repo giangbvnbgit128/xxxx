@@ -39,8 +39,15 @@ class SPRecipentTableViewCell: UITableViewCell {
     func configCell(index:Int,order:SPOrderModel) {
         self.lableNumberOfItem.text = "\(index)"
         self.lblName.text = order.nameGuest
-        self.lblProduct.text = order.phoneNumber
-        self.lblProduct.text = order.nameProduct
+        self.lblNumberPhone.text = order.phoneNumber
+        self.lblProduct.text = order.name
         self.lblAddress.text = order.nameAddress
+        let distance = order.distance
+        let distanceValue = (distance as NSString).replacingOccurrences(of: "km", with: "").trimmingCharacters(in: .whitespaces)
+        let moneyForProduct:Float = Float(order.soldProduct*order.price)
+        let moneyForShip:Float = Float(distanceValue)!*Float(order.priceShip)
+        let rs:String = "\(order.soldProduct)hang x \(order.price) " + "\(distance) * \(order.priceShip) ship = \(moneyForShip + moneyForProduct)"
+        self.lblResult.text = rs
+        
     }
 }

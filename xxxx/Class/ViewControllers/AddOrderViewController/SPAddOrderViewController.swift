@@ -74,7 +74,8 @@ class SPAddOrderViewController: SPBaseParentViewController {
     var dateforMaxShip:Date = Date()
     var product:SPProduct = SPProduct()
     var arrayProduct:[SPProduct] = []
-    var indexForProduct:Int = Int()
+    var indexForProduct:Int = 0
+    var priceProduct:Int = 0
     
     // order for detail update end delete
     
@@ -235,7 +236,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
             order.phoneNumber = phoneNumber
         }
         if let product:String = self.lblproductName.text {
-            order.nameProduct = product
+            order.name = product
         }
         
         if let distance:String = self.lblDistance.text {
@@ -253,7 +254,11 @@ class SPAddOrderViewController: SPBaseParentViewController {
         if let priceForShip:Int =  Int(self.txtPriceShipKm.text ?? "0")  {
             order.priceShip = priceForShip
         }
+        if let soldProduct:Int =  Int(self.txtfTotalProduct.text ?? "0")  {
+            order.soldProduct = soldProduct
+        }
         
+        order.price = self.priceProduct
         order.minTimeShip = self.dateforMinShip
         order.maxTimeShip = self.dateforMaxShip
         
@@ -342,6 +347,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
     @IBAction func clickOkProduct(_ sender: Any) {
         if let product:SPProduct = arrayProduct[self.indexForProduct] {
             self.lblproductName.text = product.name
+            self.priceProduct = product.price
             self.txtfTotalProduct.text = "\(product.totalProduct - product.inventory)"
             self.txtfTotalProduct.becomeFirstResponder()
             self.product = product
@@ -504,7 +510,7 @@ extension SPAddOrderViewController: UIPickerViewDataSource , UIPickerViewDelegat
     func showDetailOrder() {
         self.txtfName.text = self.orderDetail.nameGuest
         self.txtfPhoneNumber.text = self.orderDetail.phoneNumber
-        self.lblproductName.text = self.orderDetail.nameProduct
+        self.lblproductName.text = self.orderDetail.name
         self.txtfTotalProduct.text = "\(self.orderDetail.soldProduct)"
         self.btnMinTimeShip.text = "\(self.orderDetail.minTimeShip)"
         self.btnMaxTimeShip.text = "\(self.orderDetail.maxTimeShip)"
