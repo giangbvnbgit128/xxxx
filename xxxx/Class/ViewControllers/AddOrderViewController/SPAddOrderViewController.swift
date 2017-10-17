@@ -329,8 +329,11 @@ class SPAddOrderViewController: SPBaseParentViewController {
     @IBAction func addAddressWithCoordinate(_ sender: Any) {
         self.viewCoordinate.isHidden = false
         UIView.animate(withDuration: 0.3, animations: {
-        self.nscontraintHeightForAlerViewAddress.constant = 200
-          self.viewCoordinate.alpha = 1
+            DispatchQueue.main.async {
+                self.nscontraintHeightViewAler.constant = 200
+                self.viewCoordinate.alpha = 1
+            }
+
         }) { (complete) in
             //
         }
