@@ -33,8 +33,6 @@
                 <outlet property="txtcoordinateLongtitude" destination="dBi-oX-aWE" id="nSd-c5-YbI"/>
                 <outlet property="txtcoordinateName" destination="NLo-jy-oiF" id="Z9i-2J-TYn"/>
                 <outlet property="txtcoordinatelatitude" destination="t2f-UG-Jlw" id="WIF-7G-GXE"/>
-                <outlet property="txtfLatitude" destination="t2f-UG-Jlw" id="Hfg-vl-aRU"/>
-                <outlet property="txtfLongtitude" destination="dBi-oX-aWE" id="TfU-8H-Dau"/>
                 <outlet property="txtfName" destination="Bol-1X-HZT" id="cDS-4O-DVG"/>
                 <outlet property="txtfPhoneNumber" destination="Ddh-uS-gZb" id="eBu-fb-iMt"/>
                 <outlet property="txtfTotalProduct" destination="Gm0-Qs-Xcz" id="7B1-dD-EHT"/>
@@ -846,7 +844,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NLo-jy-oiF">
+                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="aa" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NLo-jy-oiF">
                                                             <rect key="frame" x="94" y="0.0" width="192" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -884,7 +882,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t2f-UG-Jlw">
+                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="21.0282439" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t2f-UG-Jlw">
                                                             <rect key="frame" x="94" y="0.0" width="192" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -925,7 +923,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dBi-oX-aWE">
+                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="105.7793722" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dBi-oX-aWE">
                                                             <rect key="frame" x="94" y="0.0" width="192" height="29"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1147,6 +1145,11 @@
                         <constraint firstAttribute="trailing" secondItem="aT8-Nj-efj" secondAttribute="trailing" id="dMA-nK-fuI"/>
                         <constraint firstAttribute="bottom" secondItem="Fvd-QG-DRG" secondAttribute="bottom" id="k6Z-Vx-xQt"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="subviews">
+                            <exclude reference="Fvd-QG-DRG"/>
+                        </mask>
+                    </variation>
                 </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

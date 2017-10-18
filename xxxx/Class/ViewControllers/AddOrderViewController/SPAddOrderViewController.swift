@@ -39,8 +39,6 @@ class SPAddOrderViewController: SPBaseParentViewController {
     
     @IBOutlet weak var viewAler: UIView!
     @IBOutlet weak var viewAlertChild: UIView!
-    @IBOutlet weak var txtfLatitude: UITextField!
-    @IBOutlet weak var txtfLongtitude: UITextField!
     
     @IBOutlet weak var nscontraintHeightViewAler: NSLayoutConstraint!
     
@@ -222,6 +220,31 @@ class SPAddOrderViewController: SPBaseParentViewController {
 // MARK: - click Save Coordinate
     
     @IBAction func clickSaveCoordinate(_ sender: Any) {
+        
+        let viewMaps = SPMapsViewController()
+        viewMaps.isSearchAddressCoordinate = true
+
+        guard let latitudeForPos = Double(self.txtcoordinatelatitude.text ?? "0") else {
+            return
+        }
+        
+        guard let longitudeForPos = Double(self.txtcoordinateLongtitude.text ?? "0") else {
+            return
+        }
+        
+        let namePos = self.txtcoordinateName.text ?? ""
+        
+        let myPos = SPAddress()
+        myPos.nameAddress = namePos
+        myPos.latitude = latitudeForPos
+        myPos.longitude = longitudeForPos
+        viewMaps.positionLocation = myPos
+        
+        
+        SPTabbarViewController.ShareInstance.navigationController?.pushViewController(viewMaps, animated: true)
+        
+        
+//        viewMaps.positionLocation = 
     }
 // MARK: - clickSave order
     
@@ -295,8 +318,9 @@ class SPAddOrderViewController: SPBaseParentViewController {
     @IBAction func clickReset(_ sender: Any) {
         self.txtfName.text = ""
         self.txtfPhoneNumber.text = ""
-        self.txtfLatitude.text = ""
-        self.txtfLongtitude.text = ""
+        self.txtcoordinatelatitude.text = ""
+        self.txtcoordinateLongtitude.text = ""
+        self.txtcoordinateName.text = ""
         self.txtfTotalProduct.text = "0"
         self.lblproductName.text = "Chọn sản phẩm"
         self.btnMinTimeShip.text = "Sớm nhất"

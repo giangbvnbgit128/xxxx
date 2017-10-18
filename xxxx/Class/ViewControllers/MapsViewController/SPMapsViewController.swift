@@ -19,6 +19,9 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
     var locationManager = CLLocationManager()
     var mapView = GMSMapView()
     var myLocation:[CLLocation] = []
+    var localPostion:CLLocation = CLLocation()
+    var positionLocation:SPAddress = SPAddress()
+    var isSearchAddressCoordinate:Bool = false
 
     struct Static {
         static var instance: SPMapsViewController?
@@ -28,6 +31,7 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
             Static.instance = SPMapsViewController()
         }
         return Static.instance!
+        
     }
     
     var myPosition:SPAddress = SPAddress()
@@ -39,6 +43,11 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
         self.setRightBarIconParent()
         Static.instance = self
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+  
     }
 
     func initGoogleMap() {
@@ -74,6 +83,12 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
             self.myPosition.latitude = location.coordinate.latitude
             self.myPosition.longitude = location.coordinate.longitude
             self.myLocation.append(location)
+            if self.isSearchAddressCoordinate {
+                self.localPostion = CLLocation(latitude: self.positionLocation.latitude, longitude: self.positionLocation.longitude)
+                
+                self.showPosition(latitude: self.positionLocation.latitude, longitude: self.positionLocation.longitude,name: self.positionLocation.nameAddress, valueZoom: 15.0)
+
+            }
         }
 
     }
@@ -95,7 +110,11 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
         let leftButton = UIButton(type: .custom)
         leftButton.addTarget(self, action: #selector(self.clickRightButton), for: .touchUpInside)
         leftButton.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
-        leftButton.setImage(UIImage(named: "search"), for: .normal)
+        var nameImage:String = "search"
+        if self.isSearchAddressCoordinate {
+            nameImage = "delete_item"
+        }
+        leftButton.setImage(UIImage(named: nameImage), for: .normal)
         leftButton.contentMode = .scaleAspectFit
         let leftView = UIView(x: 0, y: 0, width: 32, height: 32)
         leftView.addSubview(leftButton)
@@ -103,11 +122,18 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
         navigationItem.setRightBarButton(rightBarButton, animated: true)
     }
     override func clickRightButton() {
-        let autoCompleteController = GMSAutocompleteViewController()
-        autoCompleteController.delegate = self
+        if self.isSearchAddressCoordinate {
+            
+//           self.showPosition(latitude: self.positionLocation.coordinate.latitude, longitude: self.positionLocation.coordinate.longitude, valueZoom: 15.0)
+            
+        } else {
         
-        self.locationManager.startUpdatingLocation()
-        self.present(autoCompleteController, animated: true, completion: nil)
+            let autoCompleteController = GMSAutocompleteViewController()
+            autoCompleteController.delegate = self
+            self.locationManager.startUpdatingLocation()
+            self.present(autoCompleteController, animated: true, completion: nil)
+
+        }
     }
 // MARK: - DrawPath
     func drawPath(startLocation: CLLocation, endLocation: CLLocation)
@@ -128,9 +154,9 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
         Alamofire.request(url).responseJSON { response in
             
             print(response.request as Any)  // original URL request
-            print(response.response as Any) // HTTP URL response
-            print(response.data as Any)     // server data
-            print(response.result as Any)   // result of response serialization
+            print("========== \(response.response as Any)") // HTTP URL response
+            print("========== \(response.data as Any) ")    // server data
+            print("========== \(response.result as Any)")   // result of response serialization
             
             let json = JSON(data: response.data!)
             let routes = json["routes"].arrayValue
@@ -186,13 +212,8 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
 extension SPMapsViewController: GMSAutocompleteViewControllerDelegate ,GMSMapViewDelegate {
 // MARK : - AutoComplete
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        let camera = GMSCameraPosition.camera(withLatitude: place.coordinate.latitude, longitude: place.coordinate.longitude, zoom: 15.0)
-        self.mapView.camera = camera
-//        let marker = GMSMarker()
-//        marker.position = CLLocationCoordinate2D(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
-//        marker.title = "Sydney"
-//        marker.snippet = "Australia"
-//        marker.map = mapView
+
+        self.showPosition(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude,name: place.name, valueZoom: 15.0)
         let location:CLLocation = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
         
         myLocation.append(location)
@@ -207,6 +228,22 @@ extension SPMapsViewController: GMSAutocompleteViewControllerDelegate ,GMSMapVie
         }
         
         
+    }
+    
+    func showPosition(latitude:CLLocationDegrees,longitude:CLLocationDegrees,name:String, valueZoom:Float) {
+        let camera = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: valueZoom)
+        self.mapView.camera = camera
+        
+        let marker = GMSMarker()
+            marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            marker.title = name
+            marker.map = mapView
+        
+        mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+        if self.isSearchAddressCoordinate && self.myLocation.count > 0{
+            self.drawPath(startLocation: self.myLocation[0], endLocation: self.localPostion)
+        }
+       
     }
     
     func wasCancelled(_ viewController: GMSAutocompleteViewController) {
