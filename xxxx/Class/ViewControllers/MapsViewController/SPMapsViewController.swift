@@ -35,7 +35,8 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
     }
     
     var myPosition:SPAddress = SPAddress()
-    var blockCompleteUpdateAdress: ((GMSPlace,SPAddress)->Void)?
+    var blockCompleteUpdateAdress: ((GMSPlace)->Void)?
+    var blockCompleteFindAdress: (()->Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,23 +110,32 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
     override func setRightBarIconParent() {
         let leftButton = UIButton(type: .custom)
         leftButton.addTarget(self, action: #selector(self.clickRightButton), for: .touchUpInside)
-        leftButton.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
+        leftButton.frame = CGRect(x: 0, y: 0, width: 50, height: 32)
+        var leftView = UIView(x: 0, y: 0, width: 50, height: 32)
         var nameImage:String = "search"
         if self.isSearchAddressCoordinate {
-            nameImage = "delete_item"
+            nameImage = ""
+            leftButton.setTitle("Done", for: .normal)
+        } else {
+            leftButton.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
+            leftView.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
+            leftButton.setImage(UIImage(named: nameImage), for: .normal)
+            leftButton.contentMode = .scaleAspectFit
         }
-        leftButton.setImage(UIImage(named: nameImage), for: .normal)
-        leftButton.contentMode = .scaleAspectFit
-        let leftView = UIView(x: 0, y: 0, width: 32, height: 32)
+
+        
+        
         leftView.addSubview(leftButton)
         let rightBarButton = UIBarButtonItem(customView: leftView)
         navigationItem.setRightBarButton(rightBarButton, animated: true)
     }
     override func clickRightButton() {
         if self.isSearchAddressCoordinate {
-            
-//           self.showPosition(latitude: self.positionLocation.coordinate.latitude, longitude: self.positionLocation.coordinate.longitude, valueZoom: 15.0)
-            
+        
+            if let block = blockCompleteFindAdress {
+                block()
+            }
+            self.navigationController?.popViewController(animated: true)
         } else {
         
             let autoCompleteController = GMSAutocompleteViewController()
@@ -218,7 +228,7 @@ extension SPMapsViewController: GMSAutocompleteViewControllerDelegate ,GMSMapVie
         
         myLocation.append(location)
         if let block = blockCompleteUpdateAdress {
-                block(place , self.myPosition)
+                block(place)
         }
         
         self.dismiss(animated: true) {

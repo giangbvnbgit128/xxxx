@@ -245,6 +245,7 @@ class SPAddProductViewController: SPBaseParentViewController, UIImagePickerContr
 
 extension SPAddProductViewController: UITextFieldDelegate {
 
+    @available(iOS 10.0, *)
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         if textField == self.txtfUnit {
             self.lblUnitSalePrice.text = textField.text

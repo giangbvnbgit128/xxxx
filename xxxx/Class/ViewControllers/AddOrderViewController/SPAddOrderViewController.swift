@@ -65,7 +65,6 @@ class SPAddOrderViewController: SPBaseParentViewController {
     @IBOutlet weak var lblproductName: UILabel!
     @IBOutlet weak var btnMaxTimeShip: UILabel!
     var address:SPAddress = SPAddress()
-    var myLocation:SPAddress = SPAddress()
     var date:Date = Date()
     var formater:DateFormatter = DateFormatter()
     var dateforMinShip:Date = Date()
@@ -74,6 +73,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
     var arrayProduct:[SPProduct] = []
     var indexForProduct:Int = 0
     var priceProduct:Int = 0
+    var productId:Int = 0
     
     // order for detail update end delete
     
@@ -113,7 +113,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
             if  self.address.nameAddress != "" {
                 self.showAlerComfirm(message: "Bạn có muốn tính giá ship không ?", title: "Thông báo") { (compelete) in
                     if compelete {
-                        SPMapsViewController.ShareInstance.getDetailRouter(starTime: self.myLocation, endTime: self.address) { (distance, duration) in
+                        SPMapsViewController.ShareInstance.getDetailRouter(starTime: self.address, endTime: self.address) { (distance, duration) in
                             var money:Float = 0
                             let priceFoOneKm = self.txtPriceShipKm.text
                             if let priceShip = Float(priceFoOneKm ?? "5000") {
@@ -239,7 +239,10 @@ class SPAddOrderViewController: SPBaseParentViewController {
         myPos.latitude = latitudeForPos
         myPos.longitude = longitudeForPos
         viewMaps.positionLocation = myPos
-        
+        viewMaps.blockCompleteFindAdress = {() in
+          self.address = myPos
+            self.btnSearchAdress.setTitle("\(myPos.nameAddress)", for: .normal)
+        }
         
         SPTabbarViewController.ShareInstance.navigationController?.pushViewController(viewMaps, animated: true)
         
@@ -285,18 +288,21 @@ class SPAddOrderViewController: SPBaseParentViewController {
         order.minTimeShip = self.dateforMinShip
         order.maxTimeShip = self.dateforMaxShip
         
-        self.saveData(address: self.address, order: order)
+        self.saveData(address: self.address, order: order,productid: "\(self.productId)", inventer: order.totalProduct)
         
         
     }
     
-    func saveData(address:SPAddress, order: SPOrderModel) {
+    func saveData(address:SPAddress, order: SPOrderModel,productid:String,inventer:Int) {
         
         order.nameAddress = address.nameAddress
         order.latitude = address.latitude
         order.longitude = address.longitude
         let realm = try! Realm()
+        
+        let productForUpdate = realm.objects(SPProduct.self).filter("id == \(productid)").first
         try! realm.write {
+            productForUpdate?.inventory = (productForUpdate?.inventory) ?? 0 + inventer
             realm.add(order)
         }
         
@@ -340,13 +346,12 @@ class SPAddOrderViewController: SPBaseParentViewController {
 
     @IBAction func clickSearchAddressWithMaps(_ sender: Any) {
         let SPMapsVC = SPMapsViewController()
-            SPMapsVC.blockCompleteUpdateAdress = {(place, mylocation) in
+            SPMapsVC.blockCompleteUpdateAdress = {(place) in
             self.btnSearchAdress.setTitle("\(place.name)", for: .normal)
             self.address.nameAddress = place.name 
             self.address.distance = 0
             self.address.latitude = place.coordinate.latitude
             self.address.longitude = place.coordinate.longitude
-            self.myLocation = mylocation
             }
             SPTabbarViewController.ShareInstance.navigationController?.pushViewController(SPMapsVC, animated: true)
     }
@@ -377,6 +382,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
             self.priceProduct = product.price
             self.txtfTotalProduct.text = "\(product.totalProduct - product.inventory)"
             self.txtfTotalProduct.becomeFirstResponder()
+            self.productId = product.id
             self.product = product
             self.changeValueText()
         }

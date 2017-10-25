@@ -45,7 +45,7 @@ class SPRecipentTableViewCell: UITableViewCell {
         let distance = order.distance
         let distanceValue = (distance as NSString).replacingOccurrences(of: "km", with: "").trimmingCharacters(in: .whitespaces)
         let moneyForProduct:Float = Float(order.soldProduct*order.price)
-        let moneyForShip:Float = Float(distanceValue)!*Float(order.priceShip)
+        let moneyForShip:Float = (Float(distanceValue) ?? 0)*Float(order.priceShip)
         let rs:String = "\(order.soldProduct)hang x \(order.price) " + "\(distance) * \(order.priceShip) ship = \(moneyForShip + moneyForProduct)"
         self.lblResult.text = rs
         
