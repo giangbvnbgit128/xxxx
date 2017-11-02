@@ -295,6 +295,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
     
     func saveData(address:SPAddress, order: SPOrderModel,productid:String,inventer:Int) {
         
+        order.id = order.incrementID(modelName: SPOrderModel.self)
         order.nameAddress = address.nameAddress
         order.latitude = address.latitude
         order.longitude = address.longitude
@@ -302,7 +303,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
         
         let productForUpdate = realm.objects(SPProduct.self).filter("id == \(productid)").first
         try! realm.write {
-            productForUpdate?.inventory = (productForUpdate?.inventory) ?? 0 + inventer
+            productForUpdate?.inventory = ((productForUpdate?.inventory) ?? 0) + inventer
             realm.add(order)
         }
         

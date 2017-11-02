@@ -18,10 +18,12 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
 
     var locationManager = CLLocationManager()
     var mapView = GMSMapView()
-    var myLocation:[CLLocation] = []
-    var localPostion:CLLocation = CLLocation()
+    var localPointSearchCoordinate:CLLocation = CLLocation()
     var positionLocation:SPAddress = SPAddress()
     var isSearchAddressCoordinate:Bool = false
+    var isAllMaps:Bool = false
+    
+    var arrayPoint:[SPOrderModel] = []
 
     struct Static {
         static var instance: SPMapsViewController?
@@ -34,7 +36,7 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
         
     }
     
-    var myPosition:SPAddress = SPAddress()
+//    var myPosition:SPAddress = SPAddress()
     var blockCompleteUpdateAdress: ((GMSPlace)->Void)?
     var blockCompleteFindAdress: (()->Void)?
     
@@ -48,7 +50,6 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-  
     }
 
     func initGoogleMap() {
@@ -78,17 +79,39 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
+            
+            let myLocation:SPOrderModel = SPOrderModel()
+            myLocation.name = "My Location"
             let camera = GMSCameraPosition.camera(withLatitude: (location.coordinate.latitude), longitude: (location.coordinate.longitude), zoom: 15.0)
+            
+            myLocation.latitude = location.coordinate.latitude
+            myLocation.longitude = location.coordinate.longitude
+            
             self.mapView.animate(to: camera)
             self.locationManager.stopUpdatingLocation()
-            self.myPosition.latitude = location.coordinate.latitude
-            self.myPosition.longitude = location.coordinate.longitude
             self.myLocation.append(location)
             if self.isSearchAddressCoordinate {
-                self.localPostion = CLLocation(latitude: self.positionLocation.latitude, longitude: self.positionLocation.longitude)
+                self.localPointSearchCoordinate = CLLocation(latitude: self.positionLocation.latitude, longitude: self.positionLocation.longitude)
                 
                 self.showPosition(latitude: self.positionLocation.latitude, longitude: self.positionLocation.longitude,name: self.positionLocation.nameAddress, valueZoom: 15.0)
 
+            }
+            
+            if self.isAllMaps {
+                // can co 1 mang
+                let direction = Direction()
+                let sortArrayPoint:[SPOrderModel] = direction.initData(pointLocation: myLocation, arrayMyPointFor: self.arrayPoint)
+                
+                // dung vong for de ve path
+                
+                for i in 0..<sortArrayPoint.count - 1 {
+                    let startPoint:CLLocation = CLLocation(latitude: sortArrayPoint[i].latitude, longitude: sortArrayPoint[i].longitude)
+                
+                    let endPoint:CLLocation  = CLLocation( latitude: sortArrayPoint[i + 1].latitude, longitude: sortArrayPoint[i + 1].longitude)
+                    
+                    self.drawPath(startLocation: startPoint, endLocation: endPoint)
+                }
+                
             }
         }
 
@@ -148,15 +171,12 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
 // MARK: - DrawPath
     func drawPath(startLocation: CLLocation, endLocation: CLLocation)
     {
+
+        
         let origin = "\(startLocation.coordinate.latitude),\(startLocation.coordinate.longitude)"
         let destination = "\(endLocation.coordinate.latitude),\(endLocation.coordinate.longitude)"
-        let startTime:SPAddress = SPAddress()
-        startTime.latitude = startLocation.coordinate.latitude
-        startTime.longitude = startLocation.coordinate.longitude
         
-        let endtime:SPAddress = SPAddress()
-        endtime.latitude = endLocation.coordinate.latitude
-        endtime.longitude = endLocation.coordinate.longitude
+        print("origin = \(origin) destination = \(destination)")
 
         let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving"
         //"https://maps.googleapis.com/maps/api/distancematrix/xml?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Vancouver+BC&mode=bicycling&language=fr-FR&key=YOUR_API_KEY"
@@ -226,15 +246,12 @@ extension SPMapsViewController: GMSAutocompleteViewControllerDelegate ,GMSMapVie
         self.showPosition(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude,name: place.name, valueZoom: 15.0)
         let location:CLLocation = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
         
-        myLocation.append(location)
         if let block = blockCompleteUpdateAdress {
                 block(place)
         }
         
         self.dismiss(animated: true) {
-            for i in  0..<self.myLocation.count - 1 {
                 self.drawPath(startLocation: self.myLocation[i], endLocation: self.myLocation[i + 1])
-            }
         }
         
         
@@ -251,7 +268,9 @@ extension SPMapsViewController: GMSAutocompleteViewControllerDelegate ,GMSMapVie
         
         mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         if self.isSearchAddressCoordinate && self.myLocation.count > 0{
-            self.drawPath(startLocation: self.myLocation[0], endLocation: self.localPostion)
+            self.drawPath(startLocation: self.myLocation[0], endLocation: self.localPointSearchCoordinate)
+        } else {
+        
         }
        
     }

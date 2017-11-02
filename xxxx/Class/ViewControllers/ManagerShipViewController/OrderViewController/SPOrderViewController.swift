@@ -71,6 +71,8 @@ class SPOrderViewController: SPBaseViewController {
     
     @IBAction func clickMenuMaps(_ sender: Any) {
         let mapsVC = SPMapsViewController()
+        mapsVC.isAllMaps = true
+        mapsVC.arrayPoint = self.arrayOrder
         SPTabbarViewController.ShareInstance.navigationController?.pushViewController(mapsVC, animated: true)
     }
 }
