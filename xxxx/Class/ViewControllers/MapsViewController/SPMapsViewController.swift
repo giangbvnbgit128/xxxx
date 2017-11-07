@@ -38,7 +38,7 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
     
 //    var myPosition:SPAddress = SPAddress()
     var blockCompleteUpdateAdress: ((GMSPlace)->Void)?
-    var blockCompleteFindAdress: (()->Void)?
+    var blockCompleteFindAdress: ((GMSPlace)->Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,7 +89,7 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
             
             self.mapView.animate(to: camera)
             self.locationManager.stopUpdatingLocation()
-            self.myLocation.append(location)
+//            self.myLocation.append(location)
             if self.isSearchAddressCoordinate {
                 self.localPointSearchCoordinate = CLLocation(latitude: self.positionLocation.latitude, longitude: self.positionLocation.longitude)
                 
@@ -191,6 +191,7 @@ class SPMapsViewController: SPBaseParentViewController ,CLLocationManagerDelegat
             let json = JSON(data: response.data!)
             let routes = json["routes"].arrayValue
             
+            print("========== routuer\(routes.count)")
             // print route using Polyline
             for route in routes
             {
@@ -243,7 +244,7 @@ extension SPMapsViewController: GMSAutocompleteViewControllerDelegate ,GMSMapVie
 // MARK : - AutoComplete
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
 
-        self.showPosition(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude,name: place.name, valueZoom: 15.0)
+
         let location:CLLocation = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
         
         if let block = blockCompleteUpdateAdress {
@@ -251,7 +252,8 @@ extension SPMapsViewController: GMSAutocompleteViewControllerDelegate ,GMSMapVie
         }
         
         self.dismiss(animated: true) {
-                self.drawPath(startLocation: self.myLocation[i], endLocation: self.myLocation[i + 1])
+//                self.drawPath(startLocation: self.myLocation[i], endLocation: self.myLocation[i + 1])
+         self.showPosition(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude,name: place.name, valueZoom: 15.0)
         }
         
         
@@ -266,12 +268,14 @@ extension SPMapsViewController: GMSAutocompleteViewControllerDelegate ,GMSMapVie
             marker.title = name
             marker.map = mapView
         
-        mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
-        if self.isSearchAddressCoordinate && self.myLocation.count > 0{
-            self.drawPath(startLocation: self.myLocation[0], endLocation: self.localPointSearchCoordinate)
-        } else {
+        let endLocationCoordinate:CLLocation = CLLocation(latitude: latitude, longitude: longitude)
         
-        }
+        mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+//        if self.isSearchAddressCoordinate {
+            self.drawPath(startLocation: endLocationCoordinate, endLocation: self.localPointSearchCoordinate)
+//        } else {
+//        
+//        }
        
     }
     

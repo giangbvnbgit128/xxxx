@@ -64,7 +64,8 @@ class SPAddOrderViewController: SPBaseParentViewController {
    
     @IBOutlet weak var lblproductName: UILabel!
     @IBOutlet weak var btnMaxTimeShip: UILabel!
-    var address:SPAddress = SPAddress()
+    var addressEnd:SPAddress = SPAddress()
+    var myLocation:SPAddress = SPAddress()
     var date:Date = Date()
     var formater:DateFormatter = DateFormatter()
     var dateforMinShip:Date = Date()
@@ -110,10 +111,10 @@ class SPAddOrderViewController: SPBaseParentViewController {
         if self.isShowDetail {
             self.showDetailOrder()
         } else {
-            if  self.address.nameAddress != "" {
+            if  self.addressEnd.nameAddress != "" {
                 self.showAlerComfirm(message: "Bạn có muốn tính giá ship không ?", title: "Thông báo") { (compelete) in
                     if compelete {
-                        SPMapsViewController.ShareInstance.getDetailRouter(starTime: self.address, endTime: self.address) { (distance, duration) in
+                        SPMapsViewController.ShareInstance.getDetailRouter(starTime: self.mylocation, endTime: self.addressEnd) { (distance, duration) in
                             var money:Float = 0
                             let priceFoOneKm = self.txtPriceShipKm.text
                             if let priceShip = Float(priceFoOneKm ?? "5000") {
@@ -240,7 +241,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
         myPos.longitude = longitudeForPos
         viewMaps.positionLocation = myPos
         viewMaps.blockCompleteFindAdress = {() in
-          self.address = myPos
+          self.addressEnd = myPos
             self.btnSearchAdress.setTitle("\(myPos.nameAddress)", for: .normal)
         }
         
@@ -288,7 +289,7 @@ class SPAddOrderViewController: SPBaseParentViewController {
         order.minTimeShip = self.dateforMinShip
         order.maxTimeShip = self.dateforMaxShip
         
-        self.saveData(address: self.address, order: order,productid: "\(self.productId)", inventer: order.totalProduct)
+        self.saveData(address: self.addressEnd, order: order,productid: "\(self.productId)", inventer: order.totalProduct)
         
         
     }
@@ -349,10 +350,10 @@ class SPAddOrderViewController: SPBaseParentViewController {
         let SPMapsVC = SPMapsViewController()
             SPMapsVC.blockCompleteUpdateAdress = {(place) in
             self.btnSearchAdress.setTitle("\(place.name)", for: .normal)
-            self.address.nameAddress = place.name 
-            self.address.distance = 0
-            self.address.latitude = place.coordinate.latitude
-            self.address.longitude = place.coordinate.longitude
+            self.addressEnd.nameAddress = place.name
+            self.addressEnd.distance = 0
+            self.addressEnd.latitude = place.coordinate.latitude
+            self.addressEnd.longitude = place.coordinate.longitude
             }
             SPTabbarViewController.ShareInstance.navigationController?.pushViewController(SPMapsVC, animated: true)
     }
